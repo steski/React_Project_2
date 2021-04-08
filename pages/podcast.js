@@ -5,6 +5,7 @@ import {useState, useEffect} from "react";
 // Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
+header('Access-Control-Allow-Origin: *');
 
 export default function news() {
 
