@@ -67,7 +67,7 @@ export default function ProduktSeite() {
             localStorage.setItem('year','');
             return;
         };
-
+      
         // Fetchfunktion der Filmdatenbank
         async function fetchData(){
 
@@ -123,7 +123,11 @@ export default function ProduktSeite() {
     }, [debouncedSearch, debouncedYear, type, page])
 
     if(!data){
-        return <LoadingSpinner/>
+        return (
+            <Layout title="Filmliste">
+            <LoadingSpinner/>
+            </Layout>
+        );
     };
 
     // Start der Return Ausgabe

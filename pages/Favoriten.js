@@ -29,7 +29,11 @@ export default function MerkSeite() {
     },[]);
     
     if(!dataIndexedDB){
-        return <LoadingSpinner/>
+        return (
+            <Layout title="Favoriten">
+            <LoadingSpinner/>
+            </Layout>
+        );
     };
 
     return (

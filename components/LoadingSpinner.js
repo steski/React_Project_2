@@ -1,6 +1,6 @@
 // https://loading.io/css/
 import PropTypes from "prop-types";
-
+console.log("loading spinner");
 function LoadingSpinner({ message = "" }) {
   return (
     <div className="loading-spinner">

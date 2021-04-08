@@ -118,21 +118,28 @@ export default function news({feed}) {
 
 // globalen Hilfsvariablen initialisieren
 let sound, sliderUpdate;
+let pauseflag = 0;
 
 // Hilfsfunktion
 function el(css){
     return document.querySelector(css);
 };
 
-let pauseflag = 0;
-
 function playAudio(audioData){
+
+    console.log(pauseflag);
     // Altes Audio Stoppen
     if (sound){
         sound.pause();
         clearInterval(sliderUpdate);
     };
 
+    //Button zurücksetzen (falls vorher Pause war)
+    if(pauseflag === 1){
+        pauseflag = 0;
+        el('#playpause').innerHTML = "Pause";
+    };
+    
     // Sound abspielen
     sound = new Audio();
     sound.src = audioData;
