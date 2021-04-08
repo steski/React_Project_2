@@ -5,52 +5,84 @@ import {useState, useEffect} from "react";
 // Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
-export default function news() {
+export async function getStaticProps() {
+        let parser = new Parser();
+        let feed;
+        // Begin Try
+        try {
+            // Fetch mit fester RSS-Feed Adresse
+            feed = await parser.parseURL('https://movieweb.com/rss/movie-news/');
+            
+            // setNews(feed.items);
+
+            // Fehlerausgabe falls nicht news (wenn news leer)
+            if (!news) {
+                throw new Error("Fehler beim Laden der Daten!");
+            };
+
+        // Ende Try / Catch
+        } catch (error) {
+            // Fehlerausgabe
+            console.log("FEHLER :",error);
+        };
+
+    return {
+      props: {
+        // test: "Guten Tag vom Server! 🥰",
+        // time: new Date().toTimeString(),
+        feed:feed.items
+      },
+      revalidate: 600,
+    };
+  }
+
+
+export default function news({feed}) {
 
     // use State für die gefetchten RSS-Feed Daten
-    const [news, setNews] = useState([]);
+    // const [news, setNews] = useState([]);
     
-    let parser = new Parser();
+    
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        // Fetchfunktion des News RSS-Feeds
-        async function fetchNews(){
+    //     // Fetchfunktion des News RSS-Feeds
+    //     async function fetchNews(){
 
-            // Begin Try
-            try {
-                // Fetch mit fester RSS-Feed Adresse
-                let feed = await parser.parseURL('https://movieweb.com/rss/movie-news/');
-                setNews(feed.items);
+    //         // Begin Try
+    //         try {
+    //             // Fetch mit fester RSS-Feed Adresse
+    //             let feed = await parser.parseURL('https://movieweb.com/rss/movie-news/');
+    //             setNews(feed.items);
 
-                // Fehlerausgabe falls nicht news (wenn news leer)
-                if (!news) {
-                    throw new Error("Fehler beim Laden der Daten!");
-                };
+    //             // Fehlerausgabe falls nicht news (wenn news leer)
+    //             if (!news) {
+    //                 throw new Error("Fehler beim Laden der Daten!");
+    //             };
 
-            // Ende Try / Catch
-            } catch (error) {
-                // Fehlerausgabe
-                console.log("FEHLER :",error);
-            };
-        };
-        // obige Funktion aufrufen
-        fetchNews();
+    //         // Ende Try / Catch
+    //         } catch (error) {
+    //             // Fehlerausgabe
+    //             console.log("FEHLER :",error);
+    //         };
+    //     };
+    //     // obige Funktion aufrufen
+    //     fetchNews();
 
-    // wird beim Start der Seite ausgeführt
-    },[]);
+    // // wird beim Start der Seite ausgeführt
+    // },[]);
 
-    if(!news){
-        return <LoadingSpinner/>
-    };
+    // if(!news){
+    //     return <LoadingSpinner/>
+    // };
 
     return (
         <Layout title="News">
             <div>
                 {/* News durchgehen und Elemente anzeigen */}
-                {news.map(({title, link, content, pubDate, enclosure}) => (
-                    <Link href={link}>   
-                        <dl className="rss_news" key={link}>
+                {feed.map(({title, link, content, pubDate, enclosure}) => (
+                    <Link key={link} href={link}>   
+                        <dl className="rss_news">
                             <dt className="rss_title">             
                                 <h4>{title}</h4>
                             </dt>
