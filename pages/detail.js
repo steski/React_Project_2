@@ -7,9 +7,12 @@ export default function Home() {
   // gefetchte Daten
   const [data, setData] = useState("")
 
+  let id = "";
   // ID aus URL holen
-  // react router dom kann gelöscht werden
-  const id = (window.document.location.search).replace('?id=','')
+  if (typeof window !== "undefined") {
+    id = (window.document.location.search).replace('?id=','')
+    console.log("test")
+  };
   
   useEffect(() => {
 
