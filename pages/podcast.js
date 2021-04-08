@@ -13,7 +13,6 @@ export async function getStaticProps() {
     try {
         // Fetch mit fester RSS-Feed Adresse
         feed = await parser.parseURL('https://media.rss.com/filmmein/feed.xml');
-        console.log(feed);
 
         // Fehlerausgabe falls nicht news (wenn news leer)
         if (!news) {
@@ -36,14 +35,13 @@ export async function getStaticProps() {
 
 export default function news({feed}) {
 
-    console.log(feed);
-
     // use State für die gefetchten RSS-Feed Daten
     // const [news, setNews] = useState([]);
-    const [maxDuration, setMaxDuration] = useState(0)
+    const [maxDuration, setMaxDuration] = useState(0);
     // const [time, setTime] = useState(0)
     // const [volume, setvolume] = useState(50)
-    const [audioTitel, setAudioTitel] = useState("Titel")
+    const [audioTitel, setAudioTitel] = useState("Titel");
+    const [pause, setpause] = useState("0");
       
 
     useEffect(() => {  
@@ -52,7 +50,7 @@ export default function news({feed}) {
     return() => {                                        
         if (sound){
             sound.pause();
-            clearInterval(sliderUpdate)
+            clearInterval(sliderUpdate);
         };
     };
 
@@ -69,6 +67,9 @@ export default function news({feed}) {
                 <div className="Audio_Elemente">
                     <p>{audioTitel}</p>
                     <p id="currenttime">Zeitanzeige</p>
+                    
+                    <button id="playpause">Pause</button>
+
                     <input type="range" max={maxDuration} min="0" 
                         value="0" className="audioslider" id="audiotime"
                     />
@@ -91,9 +92,9 @@ export default function news({feed}) {
                             <p>
                                 <button id="play_audio" onClick={() => 
                                 {
-                                    playAudio(enclosure.url)
-                                    setMaxDuration(itunes.duration)
-                                    setAudioTitel(title)
+                                    playAudio(enclosure.url);
+                                    setMaxDuration(itunes.duration);
+                                    setAudioTitel(title);
                                 }}
                                 >Play</button>
                             </p>
@@ -123,10 +124,13 @@ function el(css){
     return document.querySelector(css);
 };
 
+let pauseflag = 0;
+
 function playAudio(audioData){
     // Altes Audio Stoppen
     if (sound){
         sound.pause();
+        clearInterval(sliderUpdate);
     };
 
     // Sound abspielen
@@ -137,6 +141,19 @@ function playAudio(audioData){
 
     // Render Funktion für den Slider Balken
     render(sound);
+
+    el('#playpause').addEventListener('click', function(){
+        if ( pauseflag === 0){
+          sound.pause();
+          pauseflag = 1;
+          el('#playpause').innerHTML = "Play";
+        }
+        else{
+          sound.play();
+          pauseflag = 0;
+          el('#playpause').innerHTML = "Pause";
+        };
+      });
 };
 
 function render(audioData){
@@ -172,5 +189,8 @@ function render(audioData){
     };
     timer();
 };
+
+
+
 
 

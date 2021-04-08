@@ -48,12 +48,18 @@ export default function news({feed}) {
                                 <div>
                                     <p>{content}</p>
                                     <p>
+                                        {/* Datumausgabe mit integrierter Konvertierung
+                                        Vergleich auf Heute - Gestern | Vergleich auf kleiner als 10 
+                                        RSS Feed hat immer News der letzten 24 Stunden, somit gibt es nur Heute oder Gestern*/}
                                         Veröffentlicht: &nbsp;
                                         {new Date(Date.now()).getDate() === new Date(pubDate).getDate() && <span>Heute</span>}
                                         {new Date(Date.now()).getDate() != new Date(pubDate).getDate() && <span>Gestern</span>}
                                         &nbsp;um&nbsp;
-                                        {(new Date(pubDate)).getHours()}:
-                                        {(new Date(pubDate)).getMinutes()}
+                                        {(new Date(pubDate)).getHours() < 10 && <span>0{(new Date(pubDate)).getHours()}</span>}
+                                        {(new Date(pubDate)).getHours() > 10 && (new Date(pubDate)).getHours()}
+                                        :
+                                        {(new Date(pubDate)).getMinutes() < 10 && <span>0{(new Date(pubDate)).getMinutes()}</span>}
+                                        {(new Date(pubDate)).getMinutes() > 10 && (new Date(pubDate)).getMinutes()}
                                         &nbsp;Uhr
                                     </p>
                                 </div>

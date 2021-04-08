@@ -16,9 +16,14 @@ export default function ProduktListe({data}) {
         <h3>{Title}</h3>
         </Link>
 
-        {/* Bild nur anzeigen, wenn eins Vorhanden ist */}
+        {/* Bild nur anzeigen, wenn eins Vorhanden ist 
+        Keine Bilder (N/A) werdefn durch Bild dummie ersetzt*/}
         { (Poster === "N/A") || (<Link href={`/detail?id=${imdbID}`}>
         <img src={Poster} alt={`Filmplakat: ${Title}`} className="teaser__image" />
+        </Link>)}
+
+        { (Poster === "N/A") && (<Link href={`/detail?id=${imdbID}`}>
+        <img src="../img/dummie.jpg" alt={`Filmplakat: ${Title}`} className="teaser__image" />
         </Link>)}
 
         {/* Jahr nur Anzeigen wenn vorhanden */}

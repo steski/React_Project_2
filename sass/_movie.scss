@@ -22,7 +22,8 @@
   }
 
   &__content {
-    display:flex;
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
   }
   dt {
     font-weight: bold;

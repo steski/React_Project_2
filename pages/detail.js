@@ -68,12 +68,12 @@ export default function Home() {
 
               <div>
                 {/* <!-- Plot anzeigen, wenn vorhanden --> */}
-                <p className="movie__plot">{data.Plot}</p>
+                <p className="movie__plot">{data.Plot != "N/A" && data.Plot}</p>
                 <dl className="movie__details">
                     {data.Released && (<><dt>Veröffentlichung</dt>
                       <dd>{data.Released}</dd></>)}
 
-                    {data.Runtime && (<><dt>Dauer</dt>
+                    {data.Runtime != "N/A" && (<><dt>Dauer</dt>
                       <dd>{data.Runtime}</dd></>)}
 
                     {data.Genre && (<><dt>Genre</dt>
@@ -85,13 +85,13 @@ export default function Home() {
                     {data.Writer && (<><dt>Drehbuchautor</dt>
                       <dd>{data.Writer}</dd></>)}
 
-                    {data.Actors && (<><dt>Schauspieler</dt>
+                    {data.Actors != "N/A" && (<><dt>Schauspieler</dt>
                       <dd>{data.Actors}</dd></>)}
 
-                    {data.Awards && (<><dt>Auszeichnungen</dt>
+                    {data.Awards != "N/A" && (<><dt>Auszeichnungen</dt>
                       <dd>{data.Awards}</dd></>)}
 
-                    {data.BoxOffice && (<><dt>Einspielergebnis</dt>
+                    {data.BoxOffice != "N/A" && (<><dt>Einspielergebnis</dt>
                       <dd>{(data.BoxOffice).replaceAll(",",".")}</dd></>)}
                 </dl>
 
