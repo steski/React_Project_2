@@ -1,19 +1,16 @@
 import Layout from '../components/Layout';
-
 import Link from "next/link";
-import {useState, useEffect} from "react";
 // Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
 export async function getStaticProps() {
         let parser = new Parser();
-        let feed;
+        let feed = [];
+
         // Begin Try
         try {
             // Fetch mit fester RSS-Feed Adresse
             feed = await parser.parseURL('https://movieweb.com/rss/movie-news/');
-            
-            // setNews(feed.items);
 
             // Fehlerausgabe falls nicht news (wenn news leer)
             if (!news) {
@@ -28,53 +25,13 @@ export async function getStaticProps() {
 
     return {
       props: {
-        // test: "Guten Tag vom Server! 🥰",
-        // time: new Date().toTimeString(),
         feed:feed.items
       },
       revalidate: 600,
     };
-  }
-
+};
 
 export default function news({feed}) {
-
-    // use State für die gefetchten RSS-Feed Daten
-    // const [news, setNews] = useState([]);
-    
-    
-
-    // useEffect(() => {
-
-    //     // Fetchfunktion des News RSS-Feeds
-    //     async function fetchNews(){
-
-    //         // Begin Try
-    //         try {
-    //             // Fetch mit fester RSS-Feed Adresse
-    //             let feed = await parser.parseURL('https://movieweb.com/rss/movie-news/');
-    //             setNews(feed.items);
-
-    //             // Fehlerausgabe falls nicht news (wenn news leer)
-    //             if (!news) {
-    //                 throw new Error("Fehler beim Laden der Daten!");
-    //             };
-
-    //         // Ende Try / Catch
-    //         } catch (error) {
-    //             // Fehlerausgabe
-    //             console.log("FEHLER :",error);
-    //         };
-    //     };
-    //     // obige Funktion aufrufen
-    //     fetchNews();
-
-    // // wird beim Start der Seite ausgeführt
-    // },[]);
-
-    // if(!news){
-    //     return <LoadingSpinner/>
-    // };
 
     return (
         <Layout title="News">

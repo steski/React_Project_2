@@ -5,42 +5,48 @@ import {useState, useEffect} from "react";
 // Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
-export default function news() {
+export async function getStaticProps() {
+    let parser = new Parser();
+    let feed = [];
+
+    // Begin Try
+    try {
+        // Fetch mit fester RSS-Feed Adresse
+        feed = await parser.parseURL('https://media.rss.com/filmmein/feed.xml');
+        console.log(feed);
+
+        // Fehlerausgabe falls nicht news (wenn news leer)
+        if (!news) {
+            throw new Error("Fehler beim Laden der Daten!");
+        };
+
+    // Ende Try / Catch
+    } catch (error) {
+        // Fehlerausgabe
+        console.log("FEHLER :",error);
+    };
+
+    return {
+    props: {
+        feed:feed.items
+    },
+    revalidate: 600,
+    };
+};
+
+export default function news({feed}) {
+
+    console.log(feed);
 
     // use State für die gefetchten RSS-Feed Daten
-    const [news, setNews] = useState([]);
+    // const [news, setNews] = useState([]);
     const [maxDuration, setMaxDuration] = useState(0)
     // const [time, setTime] = useState(0)
     // const [volume, setvolume] = useState(50)
     const [audioTitel, setAudioTitel] = useState("Titel")
-    
-    let parser = new Parser();
+      
 
-    useEffect(() => {
-
-        // Fetchfunktion des News RSS-Feeds
-        async function fetchAudioNews(){
-
-            // Begin Try
-            try {
-                // Fetch mit fester RSS-Feed Adresse
-                let feed = await parser.parseURL('https://media.rss.com/filmmein/feed.xml');
-                setNews(feed.items);
-
-                // Fehlerausgabe falls nicht news (wenn news leer)
-                if (!news) {
-                    throw new Error("Fehler beim Laden der Daten!");
-                };
-
-            // Ende Try / Catch
-            } catch (error) {
-                // Fehlerausgabe
-                console.log("FEHLER :",error);
-            };
-        };
-        // obige Funktion aufrufen
-        fetchAudioNews();
-
+    useEffect(() => {  
     
     // Stop Audio Funktion beim verlassen der Seite aufrufen
     return() => {                                        
@@ -53,9 +59,9 @@ export default function news() {
     // wird beim Start der Seite ausgeführt
     },[]);
 
-    if(!news){
-        return <LoadingSpinner/>
-    };
+    // if(!feed){
+    //     return <LoadingSpinner/>
+    // };
 
     return (
         <Layout title="Podcast">
@@ -73,7 +79,7 @@ export default function news() {
                     </p> */}
                 </div>
                 {/* News durchgehen und Elemente anzeigen */}
-                {news.map(({title, link, pubDate, enclosure, itunes}) => (
+                {feed.map(({title, link, pubDate, enclosure, itunes}) => (
 
                     <dl className="rss_news" key={link}>
                         <Link href={link}>   
@@ -131,16 +137,9 @@ function playAudio(audioData){
 
     // Render Funktion für den Slider Balken
     render(sound);
-}
-
+};
 
 function render(audioData){
-    // animate = 0;
-    
-    if(stop===1){
-        return;
-    }
-
     // EventListener für den Slider für Vorspulen etc.
     el('#audiotime').addEventListener('input',function(){
         audioData.currentTime = audioData.duration-Number(this.value);
@@ -168,10 +167,9 @@ function render(audioData){
             el('#audiotime').value = songVerbleibendDuration;
             el('#currenttime').innerHTML = `${dauerVerbleibend} / ${songGesamtDuration}`;
             
-            console.log("animationframe läuft")
+            // Aktualisierung in ms
         },100)
     };
-
     timer();
 };
 
