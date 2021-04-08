@@ -9,7 +9,7 @@ export default function Home() {
 
   // ID aus URL holen
   // react router dom kann gelöscht werden
-  const id = (window.location.search).replace('?id=','')
+  const id = (window.document.location.search).replace('?id=','')
   
   useEffect(() => {
 
@@ -35,8 +35,6 @@ export default function Home() {
             movieData.Poster = "../img/dummie.jpg"
           }
           setData(movieData);
-
-          console.log(movieData.Ratings[2]);
   
         // Leer machen bei keinem Film     
         } else {
