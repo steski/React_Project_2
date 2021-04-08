@@ -1,0 +1,62 @@
+body {
+
+  background:
+  radial-gradient(black 15%, transparent 16%) 0 0,
+  radial-gradient(black 15%, transparent 16%) 8px 8px,
+  radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px,
+  radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  background-size:16px 16px;
+
+  color: $beige;
+}
+
+/* ----- WRAPPER ----- */
+.site-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ----- HEADER ----- */
+.site-header {
+  padding: 1rem 0;
+}
+
+/* ----- MAIN ----- */
+.site-main {
+  flex: 1 0 auto;
+}
+
+.inner-width {
+  width: 100%;
+  max-width: 75rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem;
+}
+
+/* ----- NAVIGATION ----- */
+
+a {
+  color: var(--link-color);
+  transition: color 0.1s ease-out;
+  &:hover,
+  &:focus {
+    color: var(--hover-color);
+  }
+}
+
+.site-navigation {
+  padding: 1rem 0;
+  text-align: center;
+  a {
+    font-size: 1.7rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: inline-block;
+    &:not(:last-of-type) {
+      margin-right: 1rem;
+    }
+  }
+}

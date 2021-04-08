@@ -1,0 +1,103 @@
+button {
+  padding: 0.5em;
+  border-radius: 0.5em;
+  font-size: 1.2rem;
+  background: $lime-green;
+  color: $black;
+  border: none;
+  box-shadow: none;
+  margin: 0.5rem;
+  font-weight: bold;
+  color: $dark-grey;
+  &[disabled] {
+    background: $light-grey;
+  }
+}
+
+.fieldset{
+  border-radius: 1rem;
+  border: 5px solid $lime-green;
+  width:100%;
+  display:flex;
+  justify-content:space-around;
+  
+  legend {
+    padding: 10px;
+    margin:auto;
+  }
+
+  #movie, #series {
+    margin-top:25px;
+    margin-left:15px;
+  }
+}
+
+.site_buttons{
+  width: 100%;
+}
+
+#backback, #back, #forward{
+ margin-left: 1rem;
+ font-size: 1.2rem;
+}
+
+#forward{
+  float: right;
+  margin-right: 1rem;
+}
+
+.site_info{
+  width: 100%;
+  p{
+    display: inline-block;
+    width: 33%;
+    margin-top: 5;
+  }
+}
+
+.rss_news{
+  cursor: pointer;
+  width: 100%;
+  hr{
+    background-color: $dark-grey;
+    border: 3px solid $dark-grey;
+  }
+}
+
+.rss_content{
+  display:flex;
+  font-size: 1.4rem;
+  img {
+    margin-right: 10px;
+    margin-bottom: 15px;
+  }
+}
+
+
+.audioslider, .volumeslider{
+  height: 1rem;
+  -webkit-appearance: none;
+  background: $lime-green;
+  border-radius: 100px;
+  box-shadow: 0 1px 5px $dark-grey inset, 1px 1px 1px $dark-grey;
+}
+
+.audioslider{
+  width: 100%;
+  direction: rtl;
+}
+.volumeslider{
+  width: 10rem;
+}
+
+#play_audio{
+  margin:auto;
+  display:block;
+  padding: 15px 40px;
+  text-align: center;
+
+}
+
+.Audio_Elemente{
+  font-size: 1.2rem;
+}
