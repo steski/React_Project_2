@@ -4,10 +4,18 @@ import Layout from '../components/Layout'
 export default function Home() {
   return (
     <Layout title="Startseite">
-      <p>Test Projekt über eine Filmseite</p>
-      <p>RSS Newsfeed mit RSS parser</p>
-      <p>Anzeige von Filmen über omdb API</p>
-      <p>Speicherung der Inhalte in IndexedDB</p>
+      <div className="start">
+      <h3>😀 Willkommen zum Projekt des JavaScript React Kurses 😀 </h3>
+
+      <dl>
+        <dt>Inhalt</dt>
+          <dd>RSS Newsfeed</dd>
+          <dd>RSS AudioPodcast</dd>
+          <dd>Favoritenliste für favorisierte Filme</dd>
+          <dd>Filmsuche mit omdbapi</dd>
+          <dd>Detailseite der angeklickten Filme</dd>
+      </dl>
+      </div>
     </Layout>
   );
 };
