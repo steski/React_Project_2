@@ -41,7 +41,7 @@ export default function news({feed}) {
                     <Link key={link} href={link}>   
                         <dl className="rss_news">
                             <dt className="rss_title">             
-                                <h4>{title}</h4>
+                                <h4>{title.replace("&amp;","&")}</h4>
                             </dt>
                             <dd className="rss_content">
                                 <img width="30%" src={enclosure.url}></img>

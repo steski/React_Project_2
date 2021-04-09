@@ -41,7 +41,6 @@ export default function news({feed}) {
     // const [time, setTime] = useState(0)
     // const [volume, setvolume] = useState(50)
     const [audioTitel, setAudioTitel] = useState("Titel");
-    const [pause, setpause] = useState("0");
       
 
     useEffect(() => {  
