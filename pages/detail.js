@@ -55,7 +55,11 @@ export default function Home() {
   },[id])
 
   if(!data){
-    return <LoadingSpinner/>
+    return (
+      <Layout title="Details zu ...">
+      <LoadingSpinner/>
+      </Layout>
+    );
   };
 
   return (

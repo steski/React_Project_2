@@ -2,6 +2,7 @@ import Layout from '../components/Layout';
 
 import Link from "next/link";
 import {useState, useEffect} from "react";
+import { useToggle } from "../hooks/useToggle";
 // Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
@@ -40,34 +41,32 @@ export default function news({feed}) {
     const [maxDuration, setMaxDuration] = useState(0);
     // const [time, setTime] = useState(0)
     // const [volume, setvolume] = useState(50)
-    const [audioTitel, setAudioTitel] = useState("Titel");
-      
+    const [audioTitel, setAudioTitel] = useState("");
+    const [isPause, togglePause] = useToggle(false, sound);
 
     useEffect(() => {  
     
     // Stop Audio Funktion beim verlassen der Seite aufrufen
-    return() => {                                        
-        if (sound){
-            sound.pause();
-            clearInterval(sliderUpdate);
-        };
+    return() => {      
+        stopAudio(sound, sliderUpdate)
     };
 
     // wird beim Start der Seite ausgeführt
     },[]);
-
-    // if(!feed){
-    //     return <LoadingSpinner/>
-    // };
 
     return (
         <Layout title="Podcast">
             <div>
                 <div className="Audio_Elemente">
                     <p>{audioTitel}</p>
-                    <p id="currenttime">Zeitanzeige</p>
-                    
-                    <button id="playpause">Pause</button>
+                    <p id="currenttime"></p>
+
+                    <p>
+                        {/* Pause Switch  */}
+                        <button  onClick = {togglePause}>
+                            {isPause ? "Play" : "Pause"}
+                        </button>
+                    </p>
 
                     <input type="range" max={maxDuration} min="0" 
                         value="0" className="audioslider" id="audiotime"
@@ -89,8 +88,13 @@ export default function news({feed}) {
                         </Link>
                         <dd className="rss_content_audio">
                             <p>
+                                {/* Play Audio Button mit Switch, falls Pause ist */}
                                 <button id="play_audio" onClick={() => 
                                 {
+                                    if(isPause===true)
+                                    {
+                                        togglePause(true);
+                                    };
                                     playAudio(enclosure.url);
                                     setMaxDuration(itunes.duration);
                                     setAudioTitel(title);
@@ -114,31 +118,27 @@ export default function news({feed}) {
     );
 };
 
-
 // globalen Hilfsvariablen initialisieren
 let sound, sliderUpdate;
-let pauseflag = 0;
 
 // Hilfsfunktion
 function el(css){
     return document.querySelector(css);
 };
 
-function playAudio(audioData){
-
-    console.log(pauseflag);
-    // Altes Audio Stoppen
+function stopAudio(sound, sliderUpdate){
+    // Prüfen ob Sound (Sonst fehlermeldung)
     if (sound){
+        // Sound und SetIntervall (Slider) stoppen
         sound.pause();
         clearInterval(sliderUpdate);
     };
+}
 
-    //Button zurücksetzen (falls vorher Pause war)
-    if(pauseflag === 1){
-        pauseflag = 0;
-        el('#playpause').innerHTML = "Pause";
-    };
-    
+function playAudio(audioData){
+
+    stopAudio(sound, sliderUpdate)
+
     // Sound abspielen
     sound = new Audio();
     sound.src = audioData;
@@ -147,19 +147,6 @@ function playAudio(audioData){
 
     // Render Funktion für den Slider Balken
     render(sound);
-
-    el('#playpause').addEventListener('click', function(){
-        if ( pauseflag === 0){
-          sound.pause();
-          pauseflag = 1;
-          el('#playpause').innerHTML = "Play";
-        }
-        else{
-          sound.play();
-          pauseflag = 0;
-          el('#playpause').innerHTML = "Pause";
-        };
-      });
 };
 
 function render(audioData){
@@ -176,7 +163,7 @@ function render(audioData){
 
     // audioData.volume = Number(slidervolume.value)/100;
 
-    // Hilfsvariablen initialisieren
+    // Hilfsvariablen für Laufzeit initialisieren
     let songVerbleibendDuration, songGesamtDuration, dauerVerbleibend; 
 
     function timer(){
