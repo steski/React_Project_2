@@ -70,7 +70,7 @@ export default function ProduktSeite() {
         async function fetchData(){
 
             //Film Array vorher leeren um den Fehler durch doppelte Filme (in der omDB) mit Seitenwechsel zu umgehen
-            setData([]);
+            setData("");
 
             // Begin Try
             try {
@@ -123,6 +123,14 @@ export default function ProduktSeite() {
     if(!data){
         return (
             <Layout title="Filmliste">
+            <Filter/>
+            <ErgebnisInfo
+                anzahl={anzahl}
+                page={page}
+                maxPage={maxPage}   
+                ergebnisVon={ergebnisVon}
+                ergebnisBis={ergebnisBis} 
+            />
             <LoadingSpinner/>
             </Layout>
         );
