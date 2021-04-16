@@ -7,6 +7,7 @@ import SeiteNav from '../components/SeiteNav';
 import defaultMovies from "../components/defaultMovies";
 import LoadingSpinner from "../components/LoadingSpinner";
 
+
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import {useState, useEffect} from "react";
 
@@ -29,7 +30,6 @@ export default function ProduktSeite() {
     const [ergebnisVon, setergebnisVon] = useState(1);
     // ... bis
     const [ergebnisBis, setErgebnisBis] = useState(10);  
-
 
     const seiteVor = () => {
         // Button ist bei maximaler Seitenzahl schon disabled, daher nicht zwingend notwendig
@@ -55,7 +55,6 @@ export default function ProduktSeite() {
         // somit werden die defaultMovies angezeigt und Elemente zurückgesetzt
         if(debouncedSearch.length < 3){
             setData(defaultMovies);
-            localStorage.setItem('keyword','');
             setMaxPage(1);
             setAnzahl(10);
             setergebnisVon(1);
@@ -64,7 +63,6 @@ export default function ProduktSeite() {
         };
 
         if(debouncedYear.length < 4 && debouncedYear.length > 0){
-            localStorage.setItem('year','');
             return;
         };
       
@@ -161,7 +159,9 @@ export default function ProduktSeite() {
             { anzahl === 0 && (<h2>Keine Filme gefunden</h2>)}
 
             {/* Filme übergeben, hier ist das map drin */}
-            <ProduktListe data={data}/>
+            <ProduktListe 
+                data={data}
+            />
 
         </Layout>
    

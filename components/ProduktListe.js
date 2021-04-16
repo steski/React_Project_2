@@ -1,5 +1,5 @@
+import AddButtonCheck from './AddButtonCheck';
 import Link from "next/link";
-import {set} from './indexedDB';
 
 // Hier sind die Filme, die auf der PoduktSeite angezeigt werden
 // Quelle ist omdb API
@@ -27,20 +27,19 @@ export default function ProduktListe({data}) {
         </Link>)}
 
         {/* Jahr nur Anzeigen wenn vorhanden */}
-        { Year && (<time className="teaser__date" dateTime={Year}>Veröffentlichung: {Year}</time>)}
+        { Year && (<time className="teaser__date" dateTime={Year}>Release: {Year}</time>)}
 
-        {/* Button zur Merkliste hinzufügen */}
-        <button id="add"
-          onClick={() => dataSpeichernDB(Title, Year, imdbID, Poster, Type)}>Hinzufügen</button>
-
+        {/* Button mit allen Übergabeparametern
+        fügt Film zu Favoriten hinzu */}
+        <AddButtonCheck
+          imdbID = {imdbID}
+          Title = {Title}
+          Year = {Year}
+          Poster = {Poster}
+        />
+ 
       </article>
     ))}
 
   </div>;
-};
-
-// Funktion zum Speichern des Filmes in die IndexedDB
-function dataSpeichernDB(Title, Year, imdbID, Poster, Type){
-  const indexedDBdata = {Title, Year, imdbID, Poster, Type};
-  set(imdbID,indexedDBdata);
 };
