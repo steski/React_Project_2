@@ -1,13 +1,12 @@
 // https://loading.io/css/
 import PropTypes from "prop-types";
-console.log("loading spinner");
 function LoadingSpinner({ message = "" }) {
   return (
     <div className="loading-spinner">
       {message && (
         <strong className="loading-spinner__message">{message}</strong>
       )}
-      <div class="lds-hourglass"></div>
+      <div className="lds-hourglass"></div>
     </div>
   );
 }

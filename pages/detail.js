@@ -5,13 +5,15 @@ import LoadingSpinner from "../components/LoadingSpinner";
 export default function Home() {
 
   // gefetchte Daten
-  const [data, setData] = useState("")
+  const [data, setData] = useState("");
+  // Wert für Umrechnungskurs USD und EUR
+  // Startwert ist Näherungswert, falls Fetch fehlschlägt
+  const [currency, setCurrency] = useState(0.83);
 
   let id = "";
   // ID aus URL holen
   if (typeof window !== "undefined") {
-    id = (window.document.location.search).replace('?id=','')
-    console.log("test")
+    id = (window.document.location.search).replace('?id=','');
   };
   
   useEffect(() => {
@@ -25,7 +27,6 @@ export default function Home() {
         if (!response.ok) {
             throw new Error("Fehler beim Laden der Daten!");
         };
-
         // Javascript Variable
         const movieData = await response.json();
 
@@ -42,7 +43,7 @@ export default function Home() {
         // Leer machen bei keinem Film     
         } else {
           setData([]);
-        }
+        };
 
       // Ende Try / Catch Anfang
       } catch (error) {
@@ -50,7 +51,31 @@ export default function Home() {
           console.log(error);
       }; // Ende Catch
     };
+
+    // Fetch für die Währungsumrechnung mit API von USD in EUR
+    async function fetchCurrency(){
+
+      try {
+        // const currencyResponse = await fetch (`https://omdbapi.com/?apikey=1246666d&i=${id}`);
+        const currencyResponse = await fetch (`https://openexchangerates.org/api/latest.json?app_id=f7160b4c8c764336afe27ddf74a4f3d2`);
+      
+        if (!currencyResponse.ok) {
+            throw new Error("Fehler beim Laden der Währungsdaten!");
+        };
+
+        // Umrechungkurs USD in EUR speichern
+        const currencyData = await (currencyResponse.json());
+        setCurrency(currencyData.rates.EUR);
+      
+      // Ende Try / Catch Anfang
+      } catch (currencyError) {
+          // Fehlerausgabe
+          console.log(currencyError);
+      }; // Ende Catch
+    };
+
     fetchDetail();
+    fetchCurrency();
 
   },[id])
 
@@ -61,6 +86,15 @@ export default function Home() {
       </Layout>
     );
   };
+
+  // data.BoxOffice in Int umwandeln
+  let boxOffice = parseInt((data.BoxOffice)
+                  .replace("$","")
+                  .replaceAll(",",""));
+  // Mit dem Aktuellen Umrechnungskurs verrechnen
+  boxOffice = boxOffice * currency;
+  // . zwischen Tausendern. Das parseInt Muss dorthin, obwohl es schon Int ist.
+  boxOffice = parseInt(boxOffice).toLocaleString('de');
 
   return (
     <Layout title={`Details zu "${data.Title}"`}>
@@ -96,7 +130,8 @@ export default function Home() {
                       <dd>{data.Awards}</dd></>)}
 
                     {data.BoxOffice != "N/A" && (<><dt>Einspielergebnis</dt>
-                      <dd>{(data.BoxOffice).replaceAll(",",".")}</dd></>)}
+                      {/* <dd>{(data.BoxOffice).replaceAll(".",",")}</dd></>)} */}
+                      <dd>{boxOffice} €</dd></>)}
                 </dl>
 
                 <dl className="movie__ratings">
