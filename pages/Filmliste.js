@@ -15,8 +15,8 @@ export default function ProduktSeite() {
     // gefetchte Daten
     const [data, setData] = useState(defaultMovies)
     // Suchparameter, Startwert ist der Inhalt des sessionStorage
-    const [keyword, setKeyword] = useState(sessionStorage.getItem('keyword'));
-    const [year, setYear] = useState(sessionStorage.getItem('year'));
+    const [keyword, setKeyword] = useState(window.sessionStorage.getItem('keyword'));
+    const [year, setYear] = useState(window.sessionStorage.getItem('year'));
     const [type, setType] = useState("");
     // aktuelle Seitenzahl
     let [page, setPage] = useState(1);
@@ -40,7 +40,7 @@ export default function ProduktSeite() {
         // UseEffect, damit es nur beim Aufruf aufgerufen wird
         useEffect(() => {
 
-        const storagePage = sessionStorage.getItem('page');
+        const storagePage = window.sessionStorage.getItem('page');
         if (storagePage == null) {
             setPage(1);
         } else {
@@ -81,8 +81,8 @@ export default function ProduktSeite() {
             setErgebnisBis(10);
             // leeren Eintrag speichern bei defaultMovies
             // Alternativ direkt in den "x" Button integrieren
-            sessionStorage.setItem('keyword','');
-            sessionStorage.setItem('year','');
+            window.sessionStorage.setItem('keyword','');
+            window.sessionStorage.setItem('year','');
             return;
         };
 
@@ -145,13 +145,13 @@ export default function ProduktSeite() {
     // beim verlassen der Seite aufrufen
     return() => {      
         // keyword und Seite in storage speichern
-        sessionStorage.setItem('keyword',keyword);
-        sessionStorage.setItem('page',page);
+        window.sessionStorage.setItem('keyword',keyword);
+        window.sessionStorage.setItem('page',page);
         // year oder leer (bei keinem Jahr) in storage speichern
         if(year == null){
-            sessionStorage.setItem('year','');
+            window.sessionStorage.setItem('year','');
         } else {
-            sessionStorage.setItem('year',year);
+            window.sessionStorage.setItem('year',year);
         };
     };
     
