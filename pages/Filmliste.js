@@ -15,8 +15,8 @@ export default function ProduktSeite() {
     // gefetchte Daten
     const [data, setData] = useState(defaultMovies)
     // Suchparameter, Startwert ist der Inhalt des sessionStorage
-    const [keyword, setKeyword] = useState(window.sessionStorage.getItem('keyword'));
-    const [year, setYear] = useState(window.sessionStorage.getItem('year'));
+    const [keyword, setKeyword] = useState("");
+    const [year, setYear] = useState("");
     const [type, setType] = useState("");
     // aktuelle Seitenzahl
     let [page, setPage] = useState(1);
@@ -31,15 +31,19 @@ export default function ProduktSeite() {
     const [ergebnisBis, setErgebnisBis] = useState(10);  
 
     /*
-    Speichert Seite
-    Wenn Usestate sessionStorage.getItem('page') wäre, würden die Seiten fehlerhaft angezeigt werden
-    es wird somit vorher überprüft ob Page in sessionStorage ist, dann wird setPage entsprechend gesetzt
+    Funktion für sessionStorage
+    Bei Deployment (vercel) gibt es Fehlermeldung mit window not definied
+    ursprünglich wurde sessionStorage direkt im UseState geladen
+    Wird nun hier geladen mit überprüfung, ob im Storage bereits etwas drin ist
+    Ebenfalls überprüfung ob window null ist
     */
-    const readPage = () => {
+    const sessionStorageLoad = () => {
 
         // UseEffect, damit es nur beim Aufruf aufgerufen wird
+        // Ansonsten "to many Renders" Fehlermeldung
         useEffect(() => {
 
+        // Aktuelle Seite
         const storagePage = window.sessionStorage.getItem('page');
         if (storagePage == null) {
             setPage(1);
@@ -47,9 +51,25 @@ export default function ProduktSeite() {
             setPage(storagePage);
         };
 
+        // Keyword
+        const storageKeyword = window.sessionStorage.getItem('keyword');
+        if (storageKeyword == null) {
+            setKeyword("");
+        } else {
+            setKeyword(storageKeyword)
+        };
+
+        // Jahr
+        const storageYear = window.sessionStorage.getItem('year');
+        if (storageYear == null) {
+            setYear("");
+        } else {
+            setYear(storageYear)
+        };
+
         },[]);
     };
-    readPage();
+    sessionStorageLoad();
 
     const seiteVor = () => {
         // Button ist bei maximaler Seitenzahl schon disabled, daher nicht zwingend notwendig
