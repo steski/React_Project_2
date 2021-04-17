@@ -21,6 +21,10 @@
     }
   }
 
+  &__ratings {
+    margin-left: 3rem;
+  }
+
   &__content {
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));

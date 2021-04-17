@@ -13,20 +13,26 @@ export default MyApp
 
 // Merkzettel:
 
+// FEHLER
+// es gibt noch einen Fehler bei BoxOffice (Zusätzliche Überprüfung notwendig)
+// tritt nur bei einem kleinem Teil der Inhalte auf
+// z.b. ID tt0103359 oder tt8306578
+// Audio hängt sich manchmal auf wenn man zu schnell klingt
+
 // WARNINGS
 // value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components.
 // hat mit SessionStorage zu tun, wenn es keinen Wert (=null) gibt
 
 // Can't perform a React state update on an unmounted component
-// hat mit der Seitennavigation zu tun
+// hat womöglich mit Seitennavigation zu tun
 
 // A component is changing a controlled input to be uncontrolled
-// Keine Ahnung
+// hat womöglich mit Seitennavigation zu tun
 
-// Zusätzliche Features:
+// ZUSATZ
 // Filme / Serien vorselektieren und speichern
 // Zurückbutton in Detailansicht
 // Seite speichern, um zur selben Ansicht zurückzukommen
-// Umstrukturierung Navigation
 // Schriftart ändern (gefällt mir nicht)
-
+// Startseite ändern / entfernen?
+// Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig

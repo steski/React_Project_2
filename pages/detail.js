@@ -108,8 +108,8 @@ export default function Home() {
                 {/* <!-- Plot anzeigen, wenn vorhanden --> */}
                 <p className="movie__plot">{data.Plot != "N/A" && data.Plot}</p>
                 <dl className="movie__details">
-                    {data.Released && (<><dt>Veröffentlichung</dt>
-                      <dd>{data.Released}</dd></>)}
+                    {data.Released != "N/A" && (<><dt>Veröffentlichung</dt>
+                      <dd>{(data.Released).replaceAll(' ','. ')}</dd></>)}
 
                     {data.Runtime != "N/A" && (<><dt>Dauer</dt>
                       <dd>{data.Runtime}</dd></>)}
@@ -117,7 +117,7 @@ export default function Home() {
                     {data.Genre && (<><dt>Genre</dt>
                       <dd>{data.Genre}</dd></>)}
 
-                    {data.Director && (<><dt>Regisseur</dt>
+                    {data.Director != "N/A" && (<><dt>Regisseur</dt>
                       <dd>{data.Director}</dd></>)}
 
                     {data.Writer && (<><dt>Drehbuchautor</dt>
@@ -133,8 +133,10 @@ export default function Home() {
                       {/* <dd>{(data.BoxOffice).replaceAll(".",",")}</dd></>)} */}
                       <dd>{boxOffice} €</dd></>)}
                 </dl>
-
+                
+                {data.Ratings[0] && (<dt>Bewertungen</dt>)}
                 <dl className="movie__ratings">
+                  
                   <div>
                     {data.Ratings[0] && (<><dt>{data.Ratings[0].Source}</dt>
                       <dd>{data.Ratings[0].Value}</dd></>)}
@@ -145,7 +147,7 @@ export default function Home() {
                     {data.Ratings[2] && (<><dt>{data.Ratings[2].Source}</dt>
                       <dd>{data.Ratings[2].Value}</dd></>)}
                   </div>
-                </dl>
+                </dl>          
                 
               </div>
           </div>
