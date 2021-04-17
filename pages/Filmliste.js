@@ -3,10 +3,8 @@ import ProduktListe from "../components/ProduktListe";
 import Filter from '../components/Filter';
 import ErgebnisInfo from '../components/ErgebnisInfo';
 import SeiteNav from '../components/SeiteNav';
-
 import defaultMovies from "../components/defaultMovies";
 import LoadingSpinner from "../components/LoadingSpinner";
-
 
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import {useState, useEffect} from "react";
@@ -16,9 +14,9 @@ export default function ProduktSeite() {
 
     // gefetchte Daten
     const [data, setData] = useState(defaultMovies)
-    // Suchparameter
-    const [keyword, setKeyword] = useState("");
-    const [year, setYear] = useState("");
+    // Suchparameter, Startwert ist der Inhalt des sessionStorage
+    const [keyword, setKeyword] = useState(sessionStorage.getItem('keyword'));
+    const [year, setYear] = useState(sessionStorage.getItem('year'));
     const [type, setType] = useState("");
     // aktuelle Seitenzahl
     let [page, setPage] = useState(1);
@@ -53,19 +51,21 @@ export default function ProduktSeite() {
 
         // Weniger als 3 Buchstaben wird von der API nicht unterstützt
         // somit werden die defaultMovies angezeigt und Elemente zurückgesetzt
-        if(debouncedSearch.length < 3){
+        if(debouncedSearch == null || debouncedSearch.length < 3){
             setData(defaultMovies);
             setMaxPage(1);
             setAnzahl(10);
             setergebnisVon(1);
             setErgebnisBis(10);
+            // leeres keyword speichern bei defaultMovies
+            sessionStorage.setItem('keyword','');
             return;
         };
 
-        if(debouncedYear.length < 4 && debouncedYear.length > 0){
-            return;
-        };
-      
+        // if(debouncedYear == null || (debouncedYear.length < 4 && debouncedYear.length > 0)){
+        //     return;
+        // };
+
         // Fetchfunktion der Filmdatenbank
         async function fetchData(){
 
@@ -93,6 +93,7 @@ export default function ProduktSeite() {
                     setAnzahl(moviesData.totalResults);
                     setMaxPage(Math.ceil(moviesData.totalResults/10));
                     setergebnisVon(page*10-9);
+
                     if(page*10>anzahl){
                         setErgebnisBis(anzahl);
                     } else {
@@ -116,6 +117,18 @@ export default function ProduktSeite() {
 
     // oben beschriebene Funktion ausführen
     fetchData();
+
+    // beim verlassen der Seite aufrufen
+    return() => {      
+        // keyword in storage speichern
+        sessionStorage.setItem('keyword',keyword);
+        // year oder leer (bei keinem Jahr) in storage speichern
+        if(year == null){
+            sessionStorage.setItem('year','');
+        } else {
+            sessionStorage.setItem('year',year);
+        };
+    };
     
     // Abhängigkeit
     }, [debouncedSearch, debouncedYear, type, page])
