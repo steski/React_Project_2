@@ -20,6 +20,7 @@ export default function ProduktSeite() {
     const [type, setType] = useState("");
     // aktuelle Seitenzahl
     let [page, setPage] = useState(1);
+    // let [page, setPage] = useState(sessionStorage.getItem('page'));
     // Maximale Anzahl der Seiten
     const [maxPage, setMaxPage] = useState(1);
     // Gesamtanzahl der gefundenen Einträge
@@ -28,6 +29,27 @@ export default function ProduktSeite() {
     const [ergebnisVon, setergebnisVon] = useState(1);
     // ... bis
     const [ergebnisBis, setErgebnisBis] = useState(10);  
+
+    /*
+    Speichert Seite
+    Wenn Usestate sessionStorage.getItem('page') wäre, würden die Seiten fehlerhaft angezeigt werden
+    es wird somit vorher überprüft ob Page in sessionStorage ist, dann wird setPage entsprechend gesetzt
+    */
+    const readPage = () => {
+
+        // UseEffect, damit es nur beim Aufruf aufgerufen wird
+        useEffect(() => {
+
+        const storagePage = sessionStorage.getItem('page');
+        if (storagePage == null) {
+            setPage(1);
+        } else {
+            setPage(storagePage);
+        };
+
+        },[]);
+    };
+    readPage();
 
     const seiteVor = () => {
         // Button ist bei maximaler Seitenzahl schon disabled, daher nicht zwingend notwendig
@@ -57,8 +79,10 @@ export default function ProduktSeite() {
             setAnzahl(10);
             setergebnisVon(1);
             setErgebnisBis(10);
-            // leeres keyword speichern bei defaultMovies
+            // leeren Eintrag speichern bei defaultMovies
+            // Alternativ direkt in den "x" Button integrieren
             sessionStorage.setItem('keyword','');
+            sessionStorage.setItem('year','');
             return;
         };
 
@@ -120,8 +144,9 @@ export default function ProduktSeite() {
 
     // beim verlassen der Seite aufrufen
     return() => {      
-        // keyword in storage speichern
+        // keyword und Seite in storage speichern
         sessionStorage.setItem('keyword',keyword);
+        sessionStorage.setItem('page',page);
         // year oder leer (bei keinem Jahr) in storage speichern
         if(year == null){
             sessionStorage.setItem('year','');

@@ -1,6 +1,7 @@
 import Layout from '../components/Layout'
-import { useState, useEffect } from "react";
+import AddButtonCheck from '../components/AddButtonCheck';
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useState, useEffect } from "react";
 
 export default function Home() {
 
@@ -147,7 +148,15 @@ export default function Home() {
                     {data.Ratings[2] && (<><dt>{data.Ratings[2].Source}</dt>
                       <dd>{data.Ratings[2].Value}</dd></>)}
                   </div>
-                </dl>          
+                </dl>        
+                
+                  <AddButtonCheck
+                    imdbID = {id}
+                    Title = {data.Title}
+                    Year = {data.Year}
+                    Poster = {data.Poster}
+                  />     
+                  <button onClick={() => history.back()}>Zurück</button>  
                 
               </div>
           </div>

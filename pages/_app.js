@@ -17,7 +17,7 @@ export default MyApp
 // es gibt noch einen Fehler bei BoxOffice (Zusätzliche Überprüfung notwendig)
 // tritt nur bei einem kleinem Teil der Inhalte auf
 // z.b. ID tt0103359 oder tt8306578
-// Audio hängt sich manchmal auf wenn man zu schnell klingt
+// Audio hängt sich manchmal auf wenn man zu schnell klickt
 
 // WARNINGS
 // value` prop on `input` should not be null. Consider using an empty string to clear the component or `undefined` for uncontrolled components.
@@ -31,8 +31,10 @@ export default MyApp
 
 // ZUSATZ
 // Filme / Serien vorselektieren und speichern
-// Zurückbutton in Detailansicht
 // Seite speichern, um zur selben Ansicht zurückzukommen
 // Schriftart ändern (gefällt mir nicht)
 // Startseite ändern / entfernen?
+// sessionStorage Jahr entfernen wird nicht gespeichert
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
+
+// Seite zurücksetzen bei löschen des Suchbegriffs
