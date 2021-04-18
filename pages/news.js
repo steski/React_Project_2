@@ -39,7 +39,6 @@ export default function news({feed}) {
 
     return (
         <Layout title="News">
-            <div>
                 {/* News durchgehen und Elemente anzeigen */}
                 {feed.map(({title, link, content, pubDate, enclosure}) => (
                     <Link key={link} href={link}>   
@@ -62,7 +61,6 @@ export default function news({feed}) {
                         </dl>
                     </Link>
                 ))}
-            </div>
         </Layout>
     );
 };

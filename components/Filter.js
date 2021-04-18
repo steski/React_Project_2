@@ -83,8 +83,6 @@ export default function Filter({
             </fieldset>               
         {/* Ende Form zur Eingabe der Suchparameter */}
         </form>
-
     // Ende Return
     );  
-
 };

@@ -56,7 +56,6 @@ export default function news({feed}) {
 
     return (
         <Layout title="Podcast">
-            <div>
                 <div className="Audio_Elemente">
                     <p>{audioTitel}</p>
                     <p id="currenttime"></p>
@@ -106,13 +105,10 @@ export default function news({feed}) {
                                 {(new Date(pubDate)).getMonth()}.
                                 {(new Date(pubDate)).getFullYear()}
                             </p>
-
                         </dd>
                         <hr/>
-                    </dl>
-                    
+                    </dl> 
                 ))}
-            </div>
         </Layout>
     );
 };

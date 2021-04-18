@@ -2,19 +2,18 @@ export default function DateFormat({pubDate, dateNowDay}){
 
     // damit Dateobjekte nicht jedesmal neu erstellt werden
     // evtl. Minimal Ressourcensparender und übersichtlicher
-    const pubDateDay = new Date(pubDate).getDate()
-    const pubDateHours = new Date(pubDate).getHours()
-    const pubDateMinutes = new Date(pubDate).getMinutes()
+    const pubDateDay = new Date(pubDate).getDate();
+    const pubDateHours = new Date(pubDate).getHours();
+    const pubDateMinutes = new Date(pubDate).getMinutes();
 
-    const minute = (pubDateMinutes < 10 ? `0${pubDateMinutes}` : pubDateMinutes)
-    const stunde = (pubDateHours   < 10 ? `0${pubDateHours}`   : pubDateHours)
-    const tag = (dateNowDay === pubDateDay ? `Heute` : `${pubDateDay}.${new Date(pubDate).getMonth()+1}.`)
+    const minute = (pubDateMinutes < 10 ? `0${pubDateMinutes}` : pubDateMinutes);
+    const stunde = (pubDateHours   < 10 ? `0${pubDateHours}`   : pubDateHours);
+    const tag = (dateNowDay === pubDateDay ? `Heute` : `${pubDateDay}.${new Date(pubDate).getMonth()+1}.`);
 
     return (
-
-        <div>
+        <>
             {tag} um {stunde}:{minute} Uhr
-        </div>
+        </>
     );
 };
 

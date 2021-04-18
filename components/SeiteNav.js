@@ -2,7 +2,7 @@ export default function SeiteNav({maxPage, page, seiteZurueck, seiteVor, setPage
 
     return(
 
-        <div>
+        <>
             {/* Seiten Navigation */}
             {maxPage > 1 && (<div className="site_buttons">
                 {/* Seite zurück */}
@@ -35,6 +35,6 @@ export default function SeiteNav({maxPage, page, seiteZurueck, seiteVor, setPage
                     &#8594;
                 </button>
             </div>)}
-        </div>
+        </>
     );
 };

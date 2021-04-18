@@ -17,16 +17,16 @@ export default function AddButtonCheck({imdbID, Title, Year, Poster}){
         // wenn id in der indexedDB ist
         if (idCHeck === true) {
             return(
-                <div>
+                <>
                     <button id = "add" disabled="disabled">gespeichert</button>
-                </div>
+                </>
             );
         } else {
             return(
-                <div>
+                <>
                     <button id = "add"
                     onClick={() => dataSpeichernDB(Title, Year, imdbID, Poster)}>hinzufügen</button>
-                </div>
+                </>
             );
         };
 };

@@ -21,11 +21,9 @@ export default function MerkSeite() {
             const allTogether = await getMany(allKeys);
             setAnzahlIndexedDB(allTogether.length);
             setDataIndexedDB(allTogether);
-
         };
         // obige Funktion aufrufen
         keysLesen();
-
     },[]);
     
     if(!dataIndexedDB){

@@ -136,9 +136,7 @@ export default function Home() {
                 </dl>
                 
                 {data.Ratings[0] && (<dt>Bewertungen</dt>)}
-                <dl className="movie__ratings">
-                  
-                  <div>
+                <dl className="movie__ratings"> 
                     {data.Ratings[0] && (<><dt>{data.Ratings[0].Source}</dt>
                       <dd>{data.Ratings[0].Value}</dd></>)}
 
@@ -147,7 +145,6 @@ export default function Home() {
                   
                     {data.Ratings[2] && (<><dt>{data.Ratings[2].Source}</dt>
                       <dd>{data.Ratings[2].Value}</dd></>)}
-                  </div>
                 </dl>        
                 
                   <AddButtonCheck

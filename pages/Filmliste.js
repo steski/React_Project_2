@@ -248,15 +248,12 @@ export default function ProduktSeite() {
                 setPage={setPage}
                 anzahl={anzahl}
             />
-
             { anzahl === 0 && (<h2>Keine Filme gefunden</h2>)}
 
             {/* Filme übergeben, hier ist das map drin */}
             <ProduktListe 
                 data={data}
             />
-
         </Layout>
-   
     ); // Ende der Return Ausgabe
 };

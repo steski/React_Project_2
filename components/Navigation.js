@@ -5,7 +5,6 @@ export default function Navigation() {
   return (
 
 	<nav className="site-navigation">
-
 		<Link href="/">
 			<a>Start</a>
 		</Link>
@@ -21,9 +20,6 @@ export default function Navigation() {
 		<Link href="/podcast">
 			<a>Podcast</a>
 		</Link>
-
-
-
 	</nav>
   );
 };
