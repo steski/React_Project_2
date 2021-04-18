@@ -202,7 +202,12 @@ export default function ProduktSeite() {
     if(!data){
         return (
             <Layout title="Filmliste">
-            <Filter/>
+            {/* Filter mit übergabevariablen, ansonsten kleiner visueller Fehler */}
+            <Filter 
+                keyword={keyword}
+                year={year}
+                type={type}
+            />
             <ErgebnisInfo
                 anzahl={anzahl}
                 page={page}
