@@ -102,7 +102,6 @@ export default function news({feed}) {
                                 >Play</button>
                             </p>
                             <p>
-                                Veröffentlicht: &nbsp;
                                 {(new Date(pubDate)).getDate()}.
                                 {(new Date(pubDate)).getMonth()}.
                                 {(new Date(pubDate)).getFullYear()}

@@ -35,3 +35,4 @@ export default MyApp
 // SessionStorage wie bei UseToggle in Hooks machen
 // sessionStorage Data überprüfen
 // Regex bei Forumalareingabe
+// News --> Date --> Monatswechsel Eventuell Fehlerhaft? Heute, Gestern 
