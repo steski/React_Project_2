@@ -3,7 +3,6 @@ import ProduktListe from "../components/ProduktListe";
 import Filter from '../components/Filter';
 import ErgebnisInfo from '../components/ErgebnisInfo';
 import SeiteNav from '../components/SeiteNav';
-import defaultMovies from "../components/defaultMovies";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
@@ -13,7 +12,7 @@ import {useState, useEffect} from "react";
 export default function ProduktSeite() {
 
     // gefetchte Daten
-    const [data, setData] = useState(defaultMovies)
+    const [data, setData] = useState([])
     // Suchparameter, Startwert ist der Inhalt des sessionStorage
     const [keyword, setKeyword] = useState("");
     const [year, setYear] = useState("");
@@ -78,11 +77,9 @@ export default function ProduktSeite() {
         // Data
         const storageData = JSON.parse(window.sessionStorage.getItem('data'));
         if (storageData == null) {
-            setData(defaultMovies);
-            console.log("IF storageData: ")
+            setData([]);
         } else {
             setData(storageData);
-            console.log("ELSE storageData: ")
         };
 
         },[]);
@@ -110,14 +107,14 @@ export default function ProduktSeite() {
     useEffect(() => {
 
         // Weniger als 3 Buchstaben wird von der API nicht unterstützt
-        // somit werden die defaultMovies angezeigt und Elemente zurückgesetzt
+        // somit nichts angezeigt und Elemente zurückgesetzt
         if(debouncedSearch == null || debouncedSearch.length < 3){
-            setData(defaultMovies);
+            setData([]);
             setMaxPage(1);
             setAnzahl(10);
             setergebnisVon(1);
             setErgebnisBis(10);
-            // leeren Eintrag speichern bei defaultMovies
+            // leeren Eintrag speichern bei keinen ergebnissen
             // Alternativ direkt in den "x" Button integrieren
             window.sessionStorage.setItem('keyword','');
             window.sessionStorage.setItem('year','');
