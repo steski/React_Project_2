@@ -121,9 +121,13 @@ export default function ProduktSeite() {
             return;
         };
 
-        // if(debouncedYear == null || (debouncedYear.length < 4 && debouncedYear.length > 0)){
-        //     return;
-        // };
+        // Nur 4 Stellige Jahreszahlen werden durchgelassen
+        if(debouncedYear == null || (debouncedYear.length < 4 && debouncedYear.length > 0)){
+            return;
+        };
+        if(debouncedYear == null || debouncedYear.length > 4){
+            return;
+        };
 
         // Fetchfunktion der Filmdatenbank
         async function fetchData(){

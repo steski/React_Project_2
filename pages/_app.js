@@ -30,8 +30,8 @@ export default MyApp
 // hat womöglich mit Seitennavigation zu tun
 
 // ZUSATZ
-// Schriftart ändern (gefällt mir nicht)
-// sessionStorage Jahr entfernen wird nicht gespeichert
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
 // RSS NEWS: News sind auch von Vorgestern
 // SessionStorage wie bei UseToggle in Hooks machen
+// sessionStorage Data überprüfen
+// Regex bei Forumalareingabe
