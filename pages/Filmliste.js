@@ -17,7 +17,7 @@ export default function ProduktSeite() {
     // Suchparameter, Startwert ist der Inhalt des sessionStorage
     const [keyword, setKeyword] = useState("");
     const [year, setYear] = useState("");
-    const [type, setType] = useState("");
+    const [type, setType] = useState("movie");
     // aktuelle Seitenzahl
     let [page, setPage] = useState(1);
     // let [page, setPage] = useState(sessionStorage.getItem('page'));
@@ -56,7 +56,7 @@ export default function ProduktSeite() {
         if (storageKeyword == null) {
             setKeyword("");
         } else {
-            setKeyword(storageKeyword)
+            setKeyword(storageKeyword);
         };
 
         // Jahr
@@ -64,7 +64,25 @@ export default function ProduktSeite() {
         if (storageYear == null) {
             setYear("");
         } else {
-            setYear(storageYear)
+            setYear(storageYear);
+        };
+
+        // Type
+        const storageType = window.sessionStorage.getItem('type');
+        if (storageType == null) {
+            setType("movie");
+        } else {
+            setType(storageType);
+        };
+
+        // Data
+        const storageData = JSON.parse(window.sessionStorage.getItem('data'));
+        if (storageData == null) {
+            setData(defaultMovies);
+            console.log("IF storageData: ")
+        } else {
+            setData(storageData);
+            console.log("ELSE storageData: ")
         };
 
         },[]);
@@ -167,6 +185,8 @@ export default function ProduktSeite() {
         // keyword und Seite in storage speichern
         window.sessionStorage.setItem('keyword',keyword);
         window.sessionStorage.setItem('page',page);
+        window.sessionStorage.setItem('type',type);
+        window.sessionStorage.setItem('data',JSON.stringify(data));
         // year oder leer (bei keinem Jahr) in storage speichern
         if(year == null){
             window.sessionStorage.setItem('year','');
@@ -205,6 +225,7 @@ export default function ProduktSeite() {
                 setYear={setYear}
                 type={type}
                 setType={setType}
+                setPage={setPage}
             />
             <ErgebnisInfo
                 anzahl={anzahl}

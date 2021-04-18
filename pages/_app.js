@@ -30,11 +30,8 @@ export default MyApp
 // hat womöglich mit Seitennavigation zu tun
 
 // ZUSATZ
-// Filme / Serien vorselektieren und speichern
-// Seite speichern, um zur selben Ansicht zurückzukommen
 // Schriftart ändern (gefällt mir nicht)
-// Startseite ändern / entfernen?
 // sessionStorage Jahr entfernen wird nicht gespeichert
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
-
-// Seite zurücksetzen bei löschen des Suchbegriffs
+// RSS NEWS: News sind auch von Vorgestern
+// SessionStorage wie bei UseToggle in Hooks machen

@@ -6,7 +6,8 @@ export default function Filter({
     year,
     setYear,
     type,
-    setType
+    setType,
+    setPage
 }) {
 
     // Beginn Return
@@ -31,7 +32,7 @@ export default function Filter({
 
                     {/* Button zum Zurücksetzen  */}
                     <button
-                        onClick={() => setKeyword("")}
+                        onClick={() => {setKeyword("");setYear("");setPage("")}}
                         type="button"
                         disabled={keyword === ""}
                     >
@@ -68,12 +69,14 @@ export default function Filter({
                 <div>
                     <label htmlFor="movie">Filme</label>
                     <input type="radio" id="movie" name="type" value="movie"
+                        checked={type==="movie"}
                         onChange={(e) => 
                         setType(e.target.value)}/>
                 </div>
                 <div>    
                     <label htmlFor="series">Serien</label>
                     <input type="radio" id="series" name="type" value="series"
+                        checked={type==="series"}
                         onChange={(e) => 
                         setType(e.target.value)}/>
                 </div>
