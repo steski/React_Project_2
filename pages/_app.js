@@ -32,8 +32,8 @@ export default MyApp;
 // ZUSATZ
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
 // sessionStorage Data überprüfen
-// Speicherung Podcast Zeit
 // FilterCheck eventuell mit debounced?
+// Seite zurücksetzen bei Filteränderung
 
 /* Zur Übersicht - Features:
   Ursprünglich zur Projektabgabe: 
@@ -53,22 +53,23 @@ export default MyApp;
       Audiofunktion mit Start/Stop anfassbarem Fortschrittsbalken
 
   Nach Projektabage:
-    Loadingspinner fixes (hat nicht immer funktioniert)
-    Audio Pause fix
-    UmrechnungsApi USD in EUR bei Detailansicht (aktueller Kurs)
-    "Hinzufügen" Button wird disabled und zu "gespeichert" wenn Film bereits in indexedDB
-    Filmliste loadingspinner fix (teile des Layouts werden weiterhin angezeigt)
-    Implementierung SessionStorate zur Speicherung der Eingabe (Keyword, Year, Type, Page)
-    Detailseite fixes - (N/A, leere Werte etc.)
-                      - Buttons hinzugefügt
-    SessionStorage fix  - SessionStorage jetzt immer unter UseStates für alle 4 Elemente)
-                        - Speicherung bei verlassen der Filmseite
-    Film vorselektiert (damit keine Spiele etc angezeigt werden)
-    DefaultMovies komplett entfernt
-    RSS Date fix  - (es waren auch ätere Einträge als "gestern")
-                  - als Funktion ausgelagert
-    Fragment fix - einige <div> durch <> ausgetauscht und überflüssige Entfernt
-    Label für Keyword und Filter zeigen ungültiger Eingabe
-    Abbruch hinzugefügt bei falscher Filtereingabe (setAbbruch)
+    • Loadingspinner fixes (hat nicht immer funktioniert)
+    • Audio Pause fix
+    • Umrechnungs Api USD in EUR bei Detailansicht (aktueller Kurs)
+    • "Hinzufügen" Button wird disabled und zu "gespeichert" wenn Film bereits in indexedDB
+    • Filmliste loadingspinner fix (teile des Layouts werden weiterhin angezeigt)
+    • Implementierung SessionStorage zur Speicherung der Eingabe (Keyword, Year, Type, Page)
+    • Detailseite fixes - (N/A, leere Werte etc.)
+                        - Buttons hinzugefügt
+    • SessionStorage fix  - SessionStorage jetzt immer unter UseStates für alle 4 Elemente)
+                          - Speicherung bei verlassen der Filmseite
+    • Film vorselektiert (damit keine Spiele etc angezeigt werden)
+    • DefaultMovies komplett entfernt
+    • RSS Date fix  - (es waren auch ätere Einträge als "gestern")
+                    - als Funktion ausgelagert
+    • Fragment fix - einige <div> durch <> ausgetauscht und überflüssige Entfernt
+    • Label für Keyword und Filter zeigen ungültiger Eingabe
+    • Abbruch hinzugefügt bei falscher Filtereingabe (setAbbruch)
+    • Speicherung des Aktuellen Podcasts in locastStorage für späteres weiterhören
         
     */

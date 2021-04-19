@@ -1,13 +1,20 @@
 import Layout from '../components/Layout';
-
 import Link from "next/link";
 import {useState, useEffect} from "react";
 import { useToggle } from "../hooks/useToggle";
-// Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
+
+// globalen Hilfsvariablen initialisieren
+let sound, sliderUpdate;
+
+// Hilfsfunktion
+function el(css){
+    return document.querySelector(css);
+};
+
 export async function getStaticProps() {
-    let parser = new Parser();
+    const parser = new Parser();
     let feed = [];
 
     // Begin Try
@@ -27,28 +34,45 @@ export async function getStaticProps() {
     };
 
     return {
-    props: {
-        feed:feed.items
-    },
-    revalidate: 600,
+        props: {
+            feed:feed.items
+        },
+        revalidate: 600,
     };
 };
 
 export default function news({feed}) {
 
-    // use State für die gefetchten RSS-Feed Daten
-    // const [news, setNews] = useState([]);
     const [maxDuration, setMaxDuration] = useState(0);
-    // const [time, setTime] = useState(0)
     // const [volume, setvolume] = useState(50)
     const [audioTitel, setAudioTitel] = useState("");
+    const [audioURL, setAudioURL] = useState("");
+    const [audioTime, setAudioTime] = useState(0);
     const [isPause, togglePause] = useToggle(false, sound);
+    // "Weiterhören" Button anzeigen / ausblenden
+    const [audioResume, setAudioResume] = useState(false);
 
     useEffect(() => {  
+
+    // Variablen aus der Localstorage holen und speichern
+    const storageAudio = window.localStorage.getItem('audioURL');
+    if (storageAudio == null) {
+        console.log("Kein altes Audio vorhanden")
+    } else {
+        const storageAudioTitle = window.localStorage.getItem('audioTitle');
+        const storageAudioTime = window.localStorage.getItem('audioTime');
+        const storageAudioMaxDuration = window.localStorage.getItem('audioMaxDuration');
+        setAudioTitel(storageAudioTitle);
+        setAudioURL(storageAudio);
+        setAudioTime(storageAudioTime);
+        setMaxDuration(storageAudioMaxDuration);
+        setAudioResume(true);
+    };
     
     // Stop Audio Funktion beim verlassen der Seite aufrufen
     return() => {      
         stopAudio(sound, sliderUpdate)
+        sound = "";
     };
 
     // wird beim Start der Seite ausgeführt
@@ -65,6 +89,16 @@ export default function news({feed}) {
                         <button  onClick = {togglePause}>
                             {isPause ? "Play" : "Pause"}
                         </button>
+                        {/* Podcast weiterhören - wird nur beim Start angezeigt */}
+                        {audioResume ? 
+                            <button onClick={() => {
+                                resumeAudio(audioURL, audioTime);
+                                setAudioResume(false);
+                            }}>
+                                Weiterhören
+                            </button> 
+                            : 
+                            ""}
                     </p>
 
                     <input type="range" max={maxDuration} min="0" 
@@ -97,6 +131,9 @@ export default function news({feed}) {
                                     playAudio(enclosure.url);
                                     setMaxDuration(itunes.duration);
                                     setAudioTitel(title);
+                                    window.localStorage.setItem('audioTitle',title);
+                                    window.localStorage.setItem('audioURL',enclosure.url);
+                                    window.localStorage.setItem('audioMaxDuration',itunes.duration);
                                 }}
                                 >Play</button>
                             </p>
@@ -113,13 +150,6 @@ export default function news({feed}) {
     );
 };
 
-// globalen Hilfsvariablen initialisieren
-let sound, sliderUpdate;
-
-// Hilfsfunktion
-function el(css){
-    return document.querySelector(css);
-};
 
 function stopAudio(sound, sliderUpdate){
     // Prüfen ob Sound (Sonst fehlermeldung)
@@ -127,13 +157,13 @@ function stopAudio(sound, sliderUpdate){
         // Sound und SetIntervall (Slider) stoppen
         sound.pause();
         clearInterval(sliderUpdate);
+        // Zeit in localStorage speichern
+        window.localStorage.setItem('audioTime',sound.currentTime);
     };
-}
+};
 
 function playAudio(audioData){
-
-    stopAudio(sound, sliderUpdate)
-
+    stopAudio(sound, sliderUpdate);
     // Sound abspielen
     sound = new Audio();
     sound.src = audioData;
@@ -144,7 +174,13 @@ function playAudio(audioData){
     render(sound);
 };
 
+function resumeAudio(audioURL, audioTime){
+    playAudio(audioURL);
+    sound.currentTime = audioTime;
+};
+
 function render(audioData){
+    console.log("Start RenderFunktion");
     // EventListener für den Slider für Vorspulen etc.
     el('#audiotime').addEventListener('input',function(){
         audioData.currentTime = audioData.duration-Number(this.value);
@@ -163,15 +199,12 @@ function render(audioData){
 
     function timer(){
         sliderUpdate = setInterval(function(){
-
             // Zeit Elemente berechnen und aneigen
             songVerbleibendDuration = audioData.duration-audioData.currentTime;
             songGesamtDuration = Math.floor(audioData.duration/60) + 'min ' + Math.floor((audioData.duration%60)) + 's';
             dauerVerbleibend = Math.floor(songVerbleibendDuration/60) + 'min ' + Math.floor((songVerbleibendDuration%60)) +'s';
-
             el('#audiotime').value = songVerbleibendDuration;
             el('#currenttime').innerHTML = `${dauerVerbleibend} / ${songGesamtDuration}`;
-            
             // Aktualisierung in ms
         },100)
     };

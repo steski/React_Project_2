@@ -1,11 +1,10 @@
 import Layout from '../components/Layout';
 import DateFormat from '../components/DateFormat';
 import Link from "next/link";
-// Bibliothek für RSS Feed
 import Parser from 'rss-parser';
 
 export async function getStaticProps() {
-        let parser = new Parser();
+        const parser = new Parser();
         let feed = [];
 
         // Begin Try
@@ -53,7 +52,8 @@ export default function news({feed}) {
                                     <p>
                                         <DateFormat 
                                             pubDate={pubDate}
-                                            dateNowDay={dateNowDay}/>
+                                            dateNowDay={dateNowDay}
+                                        />
                                     </p>
                                 </div>
                             </dd>
