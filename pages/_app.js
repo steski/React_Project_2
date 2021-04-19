@@ -31,8 +31,6 @@ export default MyApp;
 
 // ZUSATZ
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
-// RSS NEWS: News sind auch von Vorgestern
-// SessionStorage wie bei UseToggle in Hooks machen
 // sessionStorage Data überprüfen
-// Regex bei Forumalareingabe
-// News --> Date --> Monatswechsel Eventuell Fehlerhaft? Heute, Gestern 
+// Abbrechen der Suche bei Falscher Eingabe
+// Speicherung Podcast Zeit

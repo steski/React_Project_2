@@ -1,3 +1,5 @@
+import {useState, useEffect} from "react";
+
 // Alle Filter Parameter werden hier übergeben
 // immer die Variable und die dazugehöre Set-Funktion
 export default function Filter({
@@ -9,6 +11,8 @@ export default function Filter({
     setType,
     setPage
 }) {
+    const [keywordLabel, setKeywordLabel] = useState("Suchbegriff");
+    const [yearLabel, setYearLabel] = useState("Jahr");
 
     // Beginn Return
     return (
@@ -22,7 +26,8 @@ export default function Filter({
                 {/* Suchbegriff Eingabefeld */}
                 <div>
                     {/* input Element für Keyword-Suche */}
-                    <label htmlFor="keyword">Suchbegriff</label>
+                    {/* <label htmlFor="keyword" className="keyword_label">{keywordLabel}</label> */}
+                    <KeyWordLabelCheck keyword={keyword}/>
                     <input 
                         type="text" 
                         id="keyword" 
@@ -45,7 +50,8 @@ export default function Filter({
                 {/* Suchbegriff Jahreszahl */}
                 <div>
                     {/* input Element für Jahreszahl-Suche */}
-                    <label htmlFor="year">Jahr</label>
+                    {/* <label htmlFor="year">{yearLabel}</label> */}
+                    <YearLabelCheck year={year}/>
                     <input 
                         type="text" 
                         id="year" 
@@ -86,3 +92,25 @@ export default function Filter({
     // Ende Return
     );  
 };
+
+const reg = new RegExp("^([a-z A-ZäöüÄÖÜß0-9]){3,20}$");
+
+function KeyWordLabelCheck({keyword}){
+    if (keyword.match(reg) || keyword.length === 0){
+        return <label htmlFor="keyword" className="keyword_label">Suchbegriff</label>      
+    } else {
+        return  <label htmlFor="keyword" className="keyword_label_wrong">ungültiger Suchbegriff</label>
+    };
+};
+
+function YearLabelCheck({year}){
+    if (year === ""){
+        return <label htmlFor="year" className="year_label">Jahr</label>
+    }
+    else if (year.length > 4 || year > 2040 || year < 1900) {
+        return <label htmlFor="year" className="year_label_wrong">ungültiges Jahr</label>
+    } else {
+        return  <label htmlFor="year" className="year_label">Jahr</label>
+    };
+};
+

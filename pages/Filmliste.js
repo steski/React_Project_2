@@ -8,7 +8,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import {useState, useEffect} from "react";
 
-
 export default function ProduktSeite() {
 
     // gefetchte Daten
