@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 
 // Alle Filter Parameter werden hier übergeben
 // immer die Variable und die dazugehöre Set-Funktion
@@ -9,11 +9,9 @@ export default function Filter({
     setYear,
     type,
     setType,
-    setPage
+    setPage,
+    setAbbruch
 }) {
-    const [keywordLabel, setKeywordLabel] = useState("Suchbegriff");
-    const [yearLabel, setYearLabel] = useState("Jahr");
-
     // Beginn Return
     return (
 
@@ -27,7 +25,10 @@ export default function Filter({
                 <div>
                     {/* input Element für Keyword-Suche */}
                     {/* <label htmlFor="keyword" className="keyword_label">{keywordLabel}</label> */}
-                    <KeyWordLabelCheck keyword={keyword}/>
+                    <KeyWordLabelCheck 
+                        keyword={keyword}
+                        setAbbruch={setAbbruch}
+                    />
                     <input 
                         type="text" 
                         id="keyword" 
@@ -93,16 +94,22 @@ export default function Filter({
     );  
 };
 
+// Regulärer Ausdruck für keyword
 const reg = new RegExp("^([a-z A-ZäöüÄÖÜß0-9]){3,20}$");
 
-function KeyWordLabelCheck({keyword}){
+// Suchbegriff Check mit Ausgabe im Label und setAbbruch
+function KeyWordLabelCheck({keyword, setAbbruch}){
     if (keyword.match(reg) || keyword.length === 0){
+        setAbbruch(false);
         return <label htmlFor="keyword" className="keyword_label">Suchbegriff</label>      
     } else {
+        setAbbruch(true);
         return  <label htmlFor="keyword" className="keyword_label_wrong">ungültiger Suchbegriff</label>
     };
 };
 
+// Jahr Check mit Ausgabe im Label
+// Abbruch nicht notwendig, da Jahr optional ist
 function YearLabelCheck({year}){
     if (year === ""){
         return <label htmlFor="year" className="year_label">Jahr</label>

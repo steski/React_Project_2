@@ -27,6 +27,8 @@ export default function ProduktSeite() {
     const [ergebnisVon, setergebnisVon] = useState(1);
     // ... bis
     const [ergebnisBis, setErgebnisBis] = useState(10);  
+    // bricht suche ab bei True, wird in Filterprüfung gesetzt
+    const [abbruch, setAbbruch] = useState(false);
 
     /*
     Funktion für sessionStorage
@@ -107,7 +109,8 @@ export default function ProduktSeite() {
 
         // Weniger als 3 Buchstaben wird von der API nicht unterstützt
         // somit nichts angezeigt und Elemente zurückgesetzt
-        if(debouncedSearch == null || debouncedSearch.length < 3){
+        // Durch setAbbruch sind die anderen Bedingen evtl Obsolet -> Testen
+        if(debouncedSearch == null || debouncedSearch.length < 3 || abbruch === true){
             setData([]);
             setMaxPage(1);
             setAnzahl(10);
@@ -206,6 +209,7 @@ export default function ProduktSeite() {
                 keyword={keyword}
                 year={year}
                 type={type}
+                setAbbruch={setAbbruch}
             />
             <ErgebnisInfo
                 anzahl={anzahl}
@@ -231,6 +235,7 @@ export default function ProduktSeite() {
                 type={type}
                 setType={setType}
                 setPage={setPage}
+                setAbbruch={setAbbruch}
             />
             <ErgebnisInfo
                 anzahl={anzahl}

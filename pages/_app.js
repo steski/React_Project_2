@@ -32,5 +32,43 @@ export default MyApp;
 // ZUSATZ
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
 // sessionStorage Data überprüfen
-// Abbrechen der Suche bei Falscher Eingabe
 // Speicherung Podcast Zeit
+// FilterCheck eventuell mit debounced?
+
+/* Zur Übersicht - Features:
+  Ursprünglich zur Projektabgabe: 
+    API Anbindung mit Film, Jahres, Typ Suche
+      Seitenanzeige, Seitennavigation
+      Anzeige von 10 Ergebnissen (API Bedingt)
+        Titel, Bild, Jahr, Hinzufügen Button
+      Detailansicht bei Film anklicken
+        Fetch mit ID zu spezifischen Film, Ausgabe der Infos
+    Favoriten Seite
+      hinzugefügte Filme in IndexedDB gespeichert
+      Löschen der Filme
+    RSS Newsfeed Seite
+      Titel, Bild, Beschreibung, Datum mit Konvertierung
+    RSS Podcast Seite
+      Titel, Datum, Play Button
+      Audiofunktion mit Start/Stop anfassbarem Fortschrittsbalken
+
+  Nach Projektabage:
+    Loadingspinner fixes (hat nicht immer funktioniert)
+    Audio Pause fix
+    UmrechnungsApi USD in EUR bei Detailansicht (aktueller Kurs)
+    "Hinzufügen" Button wird disabled und zu "gespeichert" wenn Film bereits in indexedDB
+    Filmliste loadingspinner fix (teile des Layouts werden weiterhin angezeigt)
+    Implementierung SessionStorate zur Speicherung der Eingabe (Keyword, Year, Type, Page)
+    Detailseite fixes - (N/A, leere Werte etc.)
+                      - Buttons hinzugefügt
+    SessionStorage fix  - SessionStorage jetzt immer unter UseStates für alle 4 Elemente)
+                        - Speicherung bei verlassen der Filmseite
+    Film vorselektiert (damit keine Spiele etc angezeigt werden)
+    DefaultMovies komplett entfernt
+    RSS Date fix  - (es waren auch ätere Einträge als "gestern")
+                  - als Funktion ausgelagert
+    Fragment fix - einige <div> durch <> ausgetauscht und überflüssige Entfernt
+    Label für Keyword und Filter zeigen ungültiger Eingabe
+    Abbruch hinzugefügt bei falscher Filtereingabe (setAbbruch)
+        
+    */
