@@ -8,7 +8,9 @@ export default function Filter({
     type,
     setType,
     setAbbruch,
-    setPageReset
+    setPageReset,
+    // Data wird übergeben um Eingaben während Laufender Suche verhinden, sonst Fehler
+    data
 }) {
     // Beginn Return
     return (
@@ -31,7 +33,11 @@ export default function Filter({
                         type="text" 
                         id="keyword" 
                         value={keyword} 
-                        onChange={(e) => {setKeyword(e.target.value);setPageReset(true);}}
+                        onChange={(e) => {
+                            if (data){
+                                setKeyword(e.target.value);setPageReset(true);
+                            };
+                        }}
                     />
 
                     {/* Button zum Zurücksetzen  */}

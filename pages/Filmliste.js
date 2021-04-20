@@ -31,6 +31,8 @@ export default function ProduktSeite() {
     const [abbruch, setAbbruch] = useState(false);
     // Seite 1 Anzeigen bei Änderung der Suchparameter
     const [pageReset, setPageReset] = useState(false);
+    // Wenn keine Filme gefunden wurden
+    const [noResult, setnoResult] = useState(false);
 
     /*
     Funktion für sessionStorage
@@ -88,11 +90,12 @@ export default function ProduktSeite() {
         // somit nichts angezeigt und Elemente zurückgesetzt
         // Durch setAbbruch sind die anderen Bedingen evtl Obsolet -> Testen
         if(debouncedSearch == null || debouncedSearch.length < 3 || abbruch === true){
+            // Damit Ergebnisinfo nicht mehr angezeigt wird
+            setMaxPage(0);
+            // damit "keine Film gefunden" angezeigt wird
+            setnoResult(true);
+            // damit Loadingspinner nicht angezeigt wird
             setData([]);
-            setMaxPage(1);
-            setAnzahl(10);
-            setergebnisVon(1);
-            setErgebnisBis(10);
             // leeren Eintrag speichern bei keinen ergebnissen
             // Alternativ direkt in den "x" Button integrieren
             window.sessionStorage.setItem('keyword','');
@@ -144,9 +147,11 @@ export default function ProduktSeite() {
 
                 // Falls keine Filme vorhanden sind
                 } else {
-                    console.log("keine Filme gefunden");
+                    // Damit Ergebnisinfo nicht mehr angezeigt wird
                     setMaxPage(0);
-                    setAnzahl(0);
+                    // damit "keine Film gefunden" angezeigt wird
+                    setnoResult(true);
+                    // damit Loadingspinner nicht angezeigt wird
                     setData([]);
                 };
 
@@ -188,13 +193,7 @@ export default function ProduktSeite() {
                 type={type}
                 setAbbruch={setAbbruch}
                 setPageReset={setPageReset}
-            />
-            <ErgebnisInfo
-                anzahl={anzahl}
-                page={page}
-                maxPage={maxPage}   
-                ergebnisVon={ergebnisVon}
-                ergebnisBis={ergebnisBis} 
+                data={data}
             />
             <LoadingSpinner/>
             </Layout>
@@ -214,6 +213,7 @@ export default function ProduktSeite() {
                 setType={setType}
                 setAbbruch={setAbbruch}
                 setPageReset={setPageReset}
+                data={data}
             />
             <ErgebnisInfo
                 anzahl={anzahl}
@@ -230,7 +230,7 @@ export default function ProduktSeite() {
                 setPage={setPage}
                 anzahl={anzahl}
             />
-            { anzahl === 0 && (<h2>Keine Filme gefunden</h2>)}
+            { noResult && (<h2>Keine Filme gefunden</h2>)}
 
             {/* Filme übergeben, hier ist das map drin */}
             <ProduktListe 

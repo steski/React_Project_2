@@ -1,7 +1,7 @@
 .lds-hourglass {
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 300px;
+  height: 300px;
   margin: auto;
 }
 .lds-hourglass:after {
@@ -10,11 +10,11 @@
   border-radius: 50%;
   width: 0;
   height: 0;
-  margin: 8px;
+  margin: 50px;
   box-sizing: border-box;
-  border: 32px solid $lime-green;
+  border: 100px solid $lime-green;
   border-color: $lime-green transparent $lime-green transparent;
-  animation: lds-hourglass 2s infinite;
+  animation: lds-hourglass 3s infinite;
 }
 @keyframes lds-hourglass {
   0% {

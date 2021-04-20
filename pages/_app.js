@@ -32,7 +32,6 @@ export default MyApp;
 // weitere Ideen:
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
 // FilterCheck eventuell mit debounced?
-// useState Funktion sessionStorage
 // Lautstärke Regler
 
 /* Zur Übersicht - Features:
