@@ -29,11 +29,12 @@ export default MyApp;
 // A component is changing a controlled input to be uncontrolled
 // hat womöglich mit Seitennavigation zu tun
 
-// ZUSATZ
+// weitere Ideen:
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
-// sessionStorage Data überprüfen
 // FilterCheck eventuell mit debounced?
-// Seite zurücksetzen bei Filteränderung
+// useState Funktion sessionStorage
+// Lautstärke Regler
+// Fehler ergebnis Bis
 
 /* Zur Übersicht - Features:
   Ursprünglich zur Projektabgabe: 
@@ -71,5 +72,5 @@ export default MyApp;
     • Label für Keyword und Filter zeigen ungültiger Eingabe
     • Abbruch hinzugefügt bei falscher Filtereingabe (setAbbruch)
     • Speicherung des Aktuellen Podcasts in locastStorage für späteres weiterhören
-        
+    • Seite Zurücksetzung bei Suchbegriffänderung
     */

@@ -139,7 +139,7 @@ export default function news({feed}) {
                             </p>
                             <p>
                                 {(new Date(pubDate)).getDate()}.
-                                {(new Date(pubDate)).getMonth()}.
+                                {(new Date(pubDate)).getMonth()+1}.
                                 {(new Date(pubDate)).getFullYear()}
                             </p>
                         </dd>
@@ -180,7 +180,6 @@ function resumeAudio(audioURL, audioTime){
 };
 
 function render(audioData){
-    console.log("Start RenderFunktion");
     // EventListener für den Slider für Vorspulen etc.
     el('#audiotime').addEventListener('input',function(){
         audioData.currentTime = audioData.duration-Number(this.value);

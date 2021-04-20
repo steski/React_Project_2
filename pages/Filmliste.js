@@ -29,6 +29,8 @@ export default function ProduktSeite() {
     const [ergebnisBis, setErgebnisBis] = useState(10);  
     // bricht suche ab bei True, wird in Filterprüfung gesetzt
     const [abbruch, setAbbruch] = useState(false);
+    // Seite 1 Anzeigen bei Änderung der Suchparameter
+    const [pageReset, setPageReset] = useState(false);
 
     /*
     Funktion für sessionStorage
@@ -38,51 +40,17 @@ export default function ProduktSeite() {
     Ebenfalls überprüfung ob window null ist
     */
     const sessionStorageLoad = () => {
-
         // UseEffect, damit es nur beim Aufruf aufgerufen wird
-        // Ansonsten "to many Renders" Fehlermeldung
         useEffect(() => {
-
-        // Aktuelle Seite
-        const storagePage = window.sessionStorage.getItem('page');
-        if (storagePage == null) {
-            setPage(1);
-        } else {
-            setPage(storagePage);
-        };
-
-        // Keyword
-        const storageKeyword = window.sessionStorage.getItem('keyword');
-        if (storageKeyword == null) {
-            setKeyword("");
-        } else {
-            setKeyword(storageKeyword);
-        };
-
-        // Jahr
-        const storageYear = window.sessionStorage.getItem('year');
-        if (storageYear == null) {
-            setYear("");
-        } else {
-            setYear(storageYear);
-        };
-
-        // Type
-        const storageType = window.sessionStorage.getItem('type');
-        if (storageType == null) {
-            setType("movie");
-        } else {
-            setType(storageType);
-        };
-
-        // Data
-        const storageData = JSON.parse(window.sessionStorage.getItem('data'));
-        if (storageData == null) {
-            setData([]);
-        } else {
-            setData(storageData);
-        };
-
+            const storageKeyword = window.sessionStorage.getItem('keyword');
+            if (storageKeyword == null) {
+                setKeyword("");
+            } else {
+                setKeyword(storageKeyword);
+                setYear(window.sessionStorage.getItem('year'));
+                setType(window.sessionStorage.getItem('type'));
+                setPage(window.sessionStorage.getItem('page'));
+            };
         },[]);
     };
     sessionStorageLoad();
@@ -104,6 +72,14 @@ export default function ProduktSeite() {
     // Wartezeit nach der Eingabe, damit nicht sofort gefetcht wird
     const debouncedSearch = useDebouncedValue(keyword, 800)
     const debouncedYear = useDebouncedValue(year, 800)
+
+    /* Seite 1 Anzeigen, Bei Eingabeänderung
+    Bei Änderung der Suchparameter ändert sich die Anzahl der Ergebnisse */
+    useEffect(() => {
+        if (pageReset == true) {
+            setPage(1);
+        };
+    },[anzahl]);
 
     useEffect(() => {
 
@@ -155,10 +131,10 @@ export default function ProduktSeite() {
                 if(moviesData.Response === "True"){
                     // Filme sind im Unterpunkt Search vom Rückgabe Objekt gespeichert
                     setData(moviesData.Search);
+                    // Informationen für Ergebnisinfo.js ermitteln
                     setAnzahl(moviesData.totalResults);
                     setMaxPage(Math.ceil(moviesData.totalResults/10));
                     setergebnisVon(page*10-9);
-
                     if(page*10>anzahl){
                         setErgebnisBis(anzahl);
                     } else {
@@ -189,7 +165,6 @@ export default function ProduktSeite() {
         window.sessionStorage.setItem('keyword',keyword);
         window.sessionStorage.setItem('page',page);
         window.sessionStorage.setItem('type',type);
-        window.sessionStorage.setItem('data',JSON.stringify(data));
         // year oder leer (bei keinem Jahr) in storage speichern
         if(year == null){
             window.sessionStorage.setItem('year','');
@@ -204,12 +179,13 @@ export default function ProduktSeite() {
     if(!data){
         return (
             <Layout title="Filmliste">
-            {/* Filter mit übergabevariablen, ansonsten kleiner visueller Fehler */}
+            {/* Filter mit übergabevariablen*/}
             <Filter 
                 keyword={keyword}
                 year={year}
                 type={type}
                 setAbbruch={setAbbruch}
+                setPageReset={setPageReset}
             />
             <ErgebnisInfo
                 anzahl={anzahl}
@@ -234,8 +210,8 @@ export default function ProduktSeite() {
                 setYear={setYear}
                 type={type}
                 setType={setType}
-                setPage={setPage}
                 setAbbruch={setAbbruch}
+                setPageReset={setPageReset}
             />
             <ErgebnisInfo
                 anzahl={anzahl}
