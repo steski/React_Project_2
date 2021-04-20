@@ -50,6 +50,7 @@ export default function ProduktSeite() {
                 setYear(window.sessionStorage.getItem('year'));
                 setType(window.sessionStorage.getItem('type'));
                 setPage(window.sessionStorage.getItem('page'));
+                setAnzahl(window.sessionStorage.getItem('anzahl'));
             };
         },[]);
     };
@@ -135,8 +136,8 @@ export default function ProduktSeite() {
                     setAnzahl(moviesData.totalResults);
                     setMaxPage(Math.ceil(moviesData.totalResults/10));
                     setergebnisVon(page*10-9);
-                    if(page*10>anzahl){
-                        setErgebnisBis(anzahl);
+                    if(page*10>moviesData.totalResults){
+                        setErgebnisBis(moviesData.totalResults);
                     } else {
                         setErgebnisBis(page*10);
                     };
@@ -165,6 +166,7 @@ export default function ProduktSeite() {
         window.sessionStorage.setItem('keyword',keyword);
         window.sessionStorage.setItem('page',page);
         window.sessionStorage.setItem('type',type);
+        window.sessionStorage.setItem('anzahl',anzahl);
         // year oder leer (bei keinem Jahr) in storage speichern
         if(year == null){
             window.sessionStorage.setItem('year','');

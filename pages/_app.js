@@ -34,7 +34,6 @@ export default MyApp;
 // FilterCheck eventuell mit debounced?
 // useState Funktion sessionStorage
 // Lautstärke Regler
-// Fehler ergebnis Bis
 
 /* Zur Übersicht - Features:
   Ursprünglich zur Projektabgabe: 
