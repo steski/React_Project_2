@@ -4,7 +4,6 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import { useState, useEffect } from "react";
 
 export default function Home() {
-
   // gefetchte Daten
   const [data, setData] = useState("");
   // Wert für Umrechnungskurs USD und EUR
@@ -78,6 +77,8 @@ export default function Home() {
     fetchDetail();
     fetchCurrency();
 
+
+
   },[id])
 
   if(!data){
@@ -88,15 +89,22 @@ export default function Home() {
     );
   };
 
-  // data.BoxOffice in Int umwandeln
-  let boxOffice = parseInt((data.BoxOffice)
-                  .replace("$","")
-                  .replaceAll(",",""));
-  // Mit dem Aktuellen Umrechnungskurs verrechnen
-  boxOffice = boxOffice * currency;
-  // . zwischen Tausendern. Das parseInt Muss dorthin, obwohl es schon Int ist.
-  boxOffice = parseInt(boxOffice).toLocaleString('de');
-
+  // BoxOffice Check
+  let boxOffice;
+  if (data.BoxOffice === "N/A" || data.BoxOffice == null) {
+    boxOffice = "0";
+  }
+  // BoxOffice in EUR umrechnen
+  else {
+    // data.BoxOffice in Int umwandeln
+    boxOffice = parseInt((data.BoxOffice)
+                    .replace("$","")
+                    .replaceAll(",",""));
+    // Mit dem Aktuellen Umrechnungskurs verrechnen
+    // . zwischen Tausendern. Das parseInt Muss dorthin, obwohl es schon Int ist.
+    boxOffice = parseInt(boxOffice * currency).toLocaleString('de');
+  };
+  
   return (
     <Layout title={`Details zu "${data.Title}"`}>
         <article className="movie">
@@ -115,13 +123,13 @@ export default function Home() {
                     {data.Runtime != "N/A" && (<><dt>Dauer</dt>
                       <dd>{data.Runtime}</dd></>)}
 
-                    {data.Genre && (<><dt>Genre</dt>
+                    {data.Genre != "N/A" && (<><dt>Genre</dt>
                       <dd>{data.Genre}</dd></>)}
 
                     {data.Director != "N/A" && (<><dt>Regisseur</dt>
                       <dd>{data.Director}</dd></>)}
 
-                    {data.Writer && (<><dt>Drehbuchautor</dt>
+                    {data.Writer != "N/A" && (<><dt>Drehbuchautor</dt>
                       <dd>{data.Writer}</dd></>)}
 
                     {data.Actors != "N/A" && (<><dt>Schauspieler</dt>
@@ -130,8 +138,7 @@ export default function Home() {
                     {data.Awards != "N/A" && (<><dt>Auszeichnungen</dt>
                       <dd>{data.Awards}</dd></>)}
 
-                    {data.BoxOffice != "N/A" && (<><dt>Einspielergebnis</dt>
-                      {/* <dd>{(data.BoxOffice).replaceAll(".",",")}</dd></>)} */}
+                    {boxOffice != 0 && (<><dt>Einspielergebnis</dt>
                       <dd>{boxOffice} €</dd></>)}
                 </dl>
                 
