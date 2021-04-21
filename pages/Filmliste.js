@@ -32,7 +32,7 @@ export default function ProduktSeite() {
     // Seite 1 Anzeigen bei Änderung der Suchparameter
     const [pageReset, setPageReset] = useState(false);
     // Wenn keine Filme gefunden wurden
-    const [noResult, setnoResult] = useState(false);
+    const [noResult, setNoResult] = useState(false);
 
     /*
     Funktion für sessionStorage
@@ -92,8 +92,6 @@ export default function ProduktSeite() {
         if(debouncedSearch == null || debouncedSearch.length < 3 || abbruch === true){
             // Damit Ergebnisinfo nicht mehr angezeigt wird
             setMaxPage(0);
-            // damit "keine Film gefunden" angezeigt wird
-            setnoResult(true);
             // damit Loadingspinner nicht angezeigt wird
             setData([]);
             // leeren Eintrag speichern bei keinen ergebnissen
@@ -116,6 +114,7 @@ export default function ProduktSeite() {
 
             //Film Array vorher leeren um den Fehler durch doppelte Filme (in der omDB) mit Seitenwechsel zu umgehen
             setData("");
+            // setNoResult(true);
 
             // Begin Try
             try {
@@ -144,13 +143,14 @@ export default function ProduktSeite() {
                     } else {
                         setErgebnisBis(page*10);
                     };
+                    setNoResult(false);
 
                 // Falls keine Filme vorhanden sind
                 } else {
                     // Damit Ergebnisinfo nicht mehr angezeigt wird
                     setMaxPage(0);
                     // damit "keine Film gefunden" angezeigt wird
-                    setnoResult(true);
+                    setNoResult(true);
                     // damit Loadingspinner nicht angezeigt wird
                     setData([]);
                 };

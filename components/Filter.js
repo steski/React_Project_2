@@ -97,11 +97,20 @@ export default function Filter({
 };
 
 // Regulärer Ausdruck für keyword
-const reg = new RegExp("^([a-z A-ZäöüÄÖÜß0-9]){3,20}$");
+const regWord = new RegExp("^([a-z A-ZäöüÄÖÜß0-9]){3,20}$");
+const regYear = new RegExp("^[0-9]{4}$");
 
 // Suchbegriff Check mit Ausgabe im Label und setAbbruch
 function KeyWordLabelCheck({keyword, setAbbruch}){
-    if (keyword.match(reg) || keyword.length === 0){
+    if (keyword.length === 1 || keyword.length === 2) {
+        setAbbruch(true);
+        return <label htmlFor="keyword" className="keyword_label_wrong">zu Kurz</label>
+    }
+    else if (keyword.length > 20) {
+        setAbbruch(true);
+        return <label htmlFor="keyword" className="keyword_label_wrong">zu Lang</label>
+    }
+    else if (keyword.match(regWord) || keyword.length === 0){
         setAbbruch(false);
         return <label htmlFor="keyword" className="keyword_label">Suchbegriff</label>      
     } else {
@@ -113,13 +122,11 @@ function KeyWordLabelCheck({keyword, setAbbruch}){
 // Jahr Check mit Ausgabe im Label
 // Abbruch nicht notwendig, da Jahr optional ist
 function YearLabelCheck({year}){
-    if (year === ""){
+    if (year.match(regYear) || year === ""){
         return <label htmlFor="year" className="year_label">Jahr</label>
     }
-    else if (year.length > 4 || year > 2040 || year < 1900) {
+    else {
         return <label htmlFor="year" className="year_label_wrong">ungültiges Jahr</label>
-    } else {
-        return  <label htmlFor="year" className="year_label">Jahr</label>
     };
 };
 
