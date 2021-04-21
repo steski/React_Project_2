@@ -39,7 +39,6 @@ export default function ProduktSeite() {
     Bei Deployment (vercel) gibt es Fehlermeldung mit window not definied
     ursprünglich wurde sessionStorage direkt im UseState geladen
     Wird nun hier geladen mit überprüfung, ob im Storage bereits etwas drin ist
-    Ebenfalls überprüfung ob window null ist
     */
     const sessionStorageLoad = () => {
         // UseEffect, damit es nur beim Aufruf aufgerufen wird

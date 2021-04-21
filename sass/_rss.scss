@@ -19,7 +19,7 @@
     }
 }
 
-.audioslider, .volumeslider{
+.audio_slider, .volume_slider{
     height: 1rem;
     -webkit-appearance: none;
     background: $lime-green;
@@ -27,12 +27,20 @@
     box-shadow: 0 1px 5px $dark-grey inset, 1px 1px 1px $dark-grey;
 }
 
-.audioslider{
+.audio_slider{
     width: 100%;
     direction: rtl;
 }
-.volumeslider{
+
+.volume_label{
+    margin-left: 2rem;
+    margin-right: 2rem;  
     width: 10rem;
+    display: inline-block;
+}
+
+.volume_slider{
+    width: 12rem;
 }
 
 #play_audio{
@@ -43,4 +51,7 @@
 }  
 .Audio_Elemente{
     font-size: 1.2rem;
+    button {
+        width: 8rem;
+    }
 }

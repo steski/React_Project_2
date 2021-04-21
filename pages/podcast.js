@@ -44,7 +44,7 @@ export async function getStaticProps() {
 export default function news({feed}) {
 
     const [maxDuration, setMaxDuration] = useState(0);
-    // const [volume, setvolume] = useState(50)
+    const [volume, setvolume] = useState(25)
     const [audioTitel, setAudioTitel] = useState("");
     const [audioURL, setAudioURL] = useState("");
     const [audioTime, setAudioTime] = useState(0);
@@ -52,23 +52,25 @@ export default function news({feed}) {
     // "Weiterhören" Button anzeigen / ausblenden
     const [audioResume, setAudioResume] = useState(false);
 
-    useEffect(() => {  
-
-    // Variablen aus der Localstorage holen und speichern
-    const storageAudio = window.localStorage.getItem('audioURL');
-    if (storageAudio == null) {
-        console.log("Kein altes Audio vorhanden")
-    } else {
-        const storageAudioTitle = window.localStorage.getItem('audioTitle');
-        const storageAudioTime = window.localStorage.getItem('audioTime');
-        const storageAudioMaxDuration = window.localStorage.getItem('audioMaxDuration');
-        setAudioTitel(storageAudioTitle);
-        setAudioURL(storageAudio);
-        setAudioTime(storageAudioTime);
-        setMaxDuration(storageAudioMaxDuration);
-        setAudioResume(true);
-    };
     
+    // UseEffect, damit es nur beim Aufruf aufgerufen wird
+    useEffect(() => {  
+    // Variablen aus der Localstorage holen und speichern
+    const localStorageLoad = () => {
+        const storageAudio = window.localStorage.getItem('audioURL');
+        if (storageAudio == null) {
+            // Kein gespeichertes Audio vorhanden
+        } else {
+            setAudioTitel(window.localStorage.getItem('audioTitle'));
+            setAudioURL(window.localStorage.getItem('audioURL'));
+            setAudioTime(window.localStorage.getItem('audioTime'));
+            setMaxDuration(window.localStorage.getItem('audioMaxDuration'));
+            setvolume(window.localStorage.getItem('audioVolume'));
+            setAudioResume(true);
+        };
+    };
+    localStorageLoad();
+
     // Stop Audio Funktion beim verlassen der Seite aufrufen
     return() => {      
         stopAudio(sound, sliderUpdate)
@@ -82,7 +84,7 @@ export default function news({feed}) {
         <Layout title="Podcast">
                 <div className="Audio_Elemente">
                     <p>{audioTitel}</p>
-                    <p id="currenttime"></p>
+                    <p id="currenttime">&nbsp;</p>
 
                     <p>
                         {/* Pause Switch  */}
@@ -102,22 +104,27 @@ export default function news({feed}) {
                     </p>
 
                     <input type="range" max={maxDuration} min="0" 
-                        value="0" className="audioslider" id="audiotime"
+                        value={audioTime} className="audio_slider" id="audiotime"
+                        onChange={(e)=>setAudioTime(e.target.value)}
                     />
-                    {/* <p>
-                        <label id="volume" htmlFor="volumeslider">Lautstärke</label>
+                    <p className="audio_volume">
+                        <label id="volume" htmlFor="volumeslider" className="volume_label">Lautstärke: {volume}%</label>
                         <input type="range" id="slidervolume" max="100" min="0" 
-                            value="50" className="volumeslider"/>  
-                    </p> */}
+                            value={volume} className="volume_slider"
+                            // Volume wird direkt geändert
+                            onChange={(e) => setvolume(e.target.value)}
+                            // Volume erst beim verlassen gespeichert
+                            onMouseLeave={(e) => window.localStorage.setItem('audioVolume',e.target.value)}/>  
+                    </p>
                 </div>
                 {/* News durchgehen und Elemente anzeigen */}
                 {feed.map(({title, link, pubDate, enclosure, itunes}) => (
 
                     <dl className="rss_news" key={link}>
                         <Link href={link}>   
-                        <dt className="rss_title">             
-                            <h4>{title}</h4>
-                        </dt>
+                            <dt className="rss_title">             
+                                <h4>{title}</h4>
+                            </dt>
                         </Link>
                         <dd className="rss_content_audio">
                             <p>
@@ -184,20 +191,13 @@ function render(audioData){
     el('#audiotime').addEventListener('input',function(){
         audioData.currentTime = audioData.duration-Number(this.value);
     });
-
-    // el('#slidervolume').addEventListener('input',function(){
-    //     audioData.volume = Number(this.value)/100;
-    //     console.log(audioData.volume)
-    //     console.log(Number(this.value))
-    // });
-
-    // audioData.volume = Number(slidervolume.value)/100;
-
     // Hilfsvariablen für Laufzeit initialisieren
     let songVerbleibendDuration, songGesamtDuration, dauerVerbleibend; 
 
     function timer(){
         sliderUpdate = setInterval(function(){
+            // Lautstärke
+            audioData.volume = Number(slidervolume.value)/100;
             // Zeit Elemente berechnen und aneigen
             songVerbleibendDuration = audioData.duration-audioData.currentTime;
             songGesamtDuration = Math.floor(audioData.duration/60) + 'min ' + Math.floor((audioData.duration%60)) + 's';

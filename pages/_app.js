@@ -31,8 +31,6 @@ export default MyApp;
 
 // weitere Ideen:
 // Bei einigen Filmen: Mal ist wert N/A, mal nicht vorhanden. Weitere Überprüfung notwendig
-// FilterCheck eventuell mit debounced?
-// Lautstärke Regler
 
 /* Zur Übersicht - Features:
   Ursprünglich zur Projektabgabe: 
@@ -71,4 +69,5 @@ export default MyApp;
     • Abbruch hinzugefügt bei falscher Filtereingabe (setAbbruch)
     • Speicherung des Aktuellen Podcasts in locastStorage für späteres weiterhören
     • Seite Zurücksetzung bei Suchbegriffänderung
+    • Lautsärkeregelung hinzugefügt
     */
