@@ -1,4 +1,3 @@
-
 import Layout from '../components/Layout';
 import MerkListe from "../components/MerkListe";
 import LoadingSpinner from "../components/LoadingSpinner";

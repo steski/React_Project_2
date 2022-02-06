@@ -151,4 +151,5 @@ function entries(customStore = defaultGetStore()) {
     return eachCursor(customStore, (cursor) => items.push([cursor.key, cursor.value])).then(() => items);
 }
 
+
 export { clear, createStore, del, entries, get, getMany, keys, promisifyRequest, set, setMany, update, values };

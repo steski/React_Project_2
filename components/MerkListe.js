@@ -6,6 +6,7 @@ import {del} from '../components/indexedDB';
 // Die Quelle "data" sind die Inhalte aus der indexedDB
 // Die Seite ist genauso aufgebaut wie die ProdukListe
 // Nur der Button ist anders - Eventuell kann man beide Dateien zusammenfassen?
+
 export default function MerkListe({data, setDataIndexedDB, anzahlIndexedDB, setAnzahlIndexedDB}) {
 
   return (<div className="movie-teasers">

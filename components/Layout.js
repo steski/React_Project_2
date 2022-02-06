@@ -2,7 +2,6 @@ import Head from "next/head";
 import Footer from "./Footer";
 import Header from "./Header";
 
-
 // Allgemeines Layout der Seite
 export default function layout({children, title}) {
 

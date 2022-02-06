@@ -37,4 +37,5 @@ export default function SeiteNav({maxPage, page, seiteZurueck, seiteVor, setPage
             </div>)}
         </>
     );
+    
 };

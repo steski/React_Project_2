@@ -35,4 +35,4 @@ export default function AddButtonCheck({imdbID, Title, Year, Poster}){
 function dataSpeichernDB(Title, Year, imdbID, Poster, Type){
     const indexedDBdata = {Title, Year, imdbID, Poster, Type};
     set(imdbID,indexedDBdata);
-  };
+};

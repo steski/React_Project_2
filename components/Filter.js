@@ -129,4 +129,3 @@ function YearLabelCheck({year}){
         return <label htmlFor="year" className="year_label_wrong">ungültiges Jahr</label>
     };
 };
-

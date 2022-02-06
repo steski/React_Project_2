@@ -17,6 +17,7 @@ export default function DateFormat({pubDate, dateNowDay}){
     );
 };
 
+
 /*
 Alter Vergleich
 

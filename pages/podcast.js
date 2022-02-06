@@ -4,7 +4,6 @@ import {useState, useEffect} from "react";
 import { useToggle } from "../hooks/useToggle";
 import Parser from 'rss-parser';
 
-
 // globalen Hilfsvariablen initialisieren
 let sound, sliderUpdate;
 
@@ -209,8 +208,3 @@ function render(audioData){
     };
     timer();
 };
-
-
-
-
-

@@ -77,8 +77,6 @@ export default function Home() {
     fetchDetail();
     fetchCurrency();
 
-
-
   },[id])
 
   if(!data){
